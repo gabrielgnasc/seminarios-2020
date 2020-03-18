@@ -1,0 +1,15 @@
+.App-h{
+    display: block;
+    top: 0px;
+    background-color: #9e24bf;
+    height: 120px;
+    width: 100%;
+    position: absolute;
+    margin-bottom: 120px;
+}
+
+.logo{
+    color: white;
+    font-weight: 600;
+    padding: 30px
+}
