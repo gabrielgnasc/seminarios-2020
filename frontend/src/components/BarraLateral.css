@@ -1,16 +1,4 @@
-.App-header {
-    background-color: white;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .App {
-    text-align: center;
-  }
-
-  .info-login-bg{
+.info-login-bg{
     height: 100vh;
     width: 500px;
     background-color: #9e24bf;
