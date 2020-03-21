@@ -50,3 +50,9 @@
     margin-top: 80px;
     padding-top: 100px;
   }
+
+@media(max-width: 981px){
+    .info-login-bg{
+      width: 400px;
+    }
+}

@@ -61,6 +61,7 @@ a.btn-ancora {
 }
 
 .center-position{
+  margin: 15px;
   flex-grow: 1;
   height: 100%;
   text-align: -webkit-center;
