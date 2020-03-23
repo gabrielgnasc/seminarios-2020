@@ -61,13 +61,11 @@
 }
 
 a.btn-ancora {
-    text-align: center;
-    margin-top: 40px;
-    color: #9e24bf;
-}
-
-a.btn-ancora:hover {
-  color: #9e24bfaa;
+  flex: 100%;
+  text-align: center;
+  margin-top: 40px;
+  height: 45px;
+  width: 100%;
 }
 
 .center-position{
@@ -103,7 +101,7 @@ a.btn-ancora:hover {
 .text-qrid{
   font-size: 36px;
   font-weight: 700;
-  color: #9e24bf;
+  color: #9f1fc1;
   z-index: 2;
   padding: 2px;
   margin-top: 20px;
