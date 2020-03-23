@@ -10,7 +10,7 @@ function BarraLateral() {
             <h1 className="text-logo"> QR Id </h1>
             <p>Agora as pessoas que você ama podem ficar ainda mais seguras.</p>
           </div>
-          <img src={qrid} className="img-qr" ></img>
+          <img alt="QR-ID" src={qrid} className="img-qr" ></img>
           <p style={{color:'#FFF', fontSize:16}}>Escaneie para mais informações</p>
           <div className="text-info-w2">
             <p >Cadastre-se já, é gratuito.</p><br></br>
