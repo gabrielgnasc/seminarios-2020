@@ -10,7 +10,7 @@ mongoose.connect('mongodb+srv://seminariosPUC:t86c2Rs6TC09AAgX@cluster0-bs4ii.mo
     useUnifiedTopology: true,
 });
 
-//app.use(cors({origin: 'http://localhost:3000'}));
+app.use(cors({origin: 'http://localhost:3000'}));
 app.use(express.json());
 app.use(routes);
 

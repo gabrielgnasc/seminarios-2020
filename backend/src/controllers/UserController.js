@@ -1,7 +1,4 @@
-const axios = require('axios');
-const Dev = require('../models/Dev');
 const User = require('../models/User');
-const parseStringAsArray = require('../utils/ParseStringAsArray');
 
 module.exports = {
 
