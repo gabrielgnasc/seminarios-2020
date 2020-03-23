@@ -1,44 +1,31 @@
 //const Dev = require('../models/Dev');
 const User = require('../models/User');
-
+const jwt = require('jsonwebtoken');
+const authConfig = require('./../config/auth');
 
 module.exports = {
 
     async index(req, res){
-        console.log(req.body)
-        if (req.body.name &&
-            req.body.email &&
-            req.body.password &&
-            req.body.confirmPassword) {
-    
-            if (req.body.password !== req.body.confirmPassword) {
-                error ="passwords do not match";
-                return res.json({error});
-            }
-            else {
-                
-                var userData = {
-                    email: req.body.email,
-                    name: req.body.name,
-                    password: req.body.password,
-                    role: 'user',
-                    type: req.body.type
-                };
-    
-                // insert into mongo with Schema's create method from mongoose
-                var createdUser = await User.create(userData, function(error, user) {
-                    if (error)  {
-                        return res.json({error});
-                    } else {
-                        // follow up action
-                        return res.json(createdUser);
-                    }
-                });
+       const {email} = req.body;
 
-            }
-        } else {
-            error ="All fields required";
-            return res.json({error});
+        try{
+
+            if(await User.findOne({email}))
+                return res.json({error: 'O usuário já existe'})
+
+            var createdUser = await User.create(req.body);
+            createdUser.password = undefined;
+
+            const token = jwt.sign({ id: createdUser.id }, authConfig.secret, {
+                expiresIn: 86400,
+            })
+
+            return res.json({createdUser, token});
+            
+        }catch (err){
+            return res.send({error: 'O usuário já existe'});
         }
+        
+
     }
 }

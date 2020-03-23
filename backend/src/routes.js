@@ -5,6 +5,7 @@ const UserDelete = require('./controllers/UserDelete');
 const CreateUser = require('./controllers/CreateUserController');
 const UpdateUser = require('./controllers/UpdateUserController');
 
+
 const routes = Router();
 
 routes.post('/login', LoginController.index);
@@ -12,7 +13,6 @@ routes.post('/login', LoginController.index);
 routes.get('/users', UserController.index);
 
 routes.get('/user/:id', UserController.store);
-
 
 routes.delete('/delete/:id', UserDelete.index);
 
