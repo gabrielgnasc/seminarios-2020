@@ -4,6 +4,7 @@ const LoginController = require('./controllers/LoginController');
 const UserDelete = require('./controllers/UserDelete');
 const CreateUser = require('./controllers/CreateUserController');
 const UpdateUser = require('./controllers/UpdateUserController');
+const UserByToken = require('./controllers/UserByToken');
 
 
 const routes = Router();
@@ -18,7 +19,9 @@ routes.delete('/delete/:id', UserDelete.index);
 
 routes.post('/createUser', CreateUser.index);
 
-routes.post('/updateUser', UpdateUser.index);
+routes.post('/createUser', CreateUser.index);
+
+routes.get('/token/:token', UserByToken.index);
 //  #9e24bf 
 
 module.exports = routes ;

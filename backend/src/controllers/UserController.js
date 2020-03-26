@@ -1,10 +1,14 @@
 const User = require('../models/User');
+const Auth = require('../middlewares/auth');
 
 module.exports = {
 
-    async store(req, res){
+    async store(req, res, next){
 
-        const { params } = req; 
+        await Auth.index(req,res,next);
+        
+        const {params} = req;
+
         const id = params.id;
         const user = await User.findOne({ _id: id});
         return res.json(user);     
