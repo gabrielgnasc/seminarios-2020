@@ -2,11 +2,12 @@ import React, {useState} from 'react';
 import './Login.css';
 import api from '../service';
 import { Alert } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {history} from '../../shared/history/history'
 
 function Login() {
 
+    
     const [email, setEmail] = useState(''); 
     const [senha, setSenha] = useState('');
     const [erro, setErro] = useState('');
@@ -34,6 +35,14 @@ function Login() {
         }
     }
 
+    function isLogged(){
+        if(localStorage.getItem('token')){
+            return(
+                <Redirect to={{ pathname: '/login'}} />
+            )
+        }
+    }
+
     function AlertDismissibleExample() {
         if (show) {
           return (
@@ -46,8 +55,9 @@ function Login() {
 
     return (
         <div className="center-position">
+            {isLogged()}
             <div className="tam-max">
-                <h3 id="id-login" className="card-title">Login</h3>
+                <h3 >Login</h3>
                 <hr></hr>
                 {AlertDismissibleExample()}
                 <form onSubmit={logar} >

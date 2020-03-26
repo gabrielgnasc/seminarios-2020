@@ -1,12 +1,12 @@
 .nav-color{
     background-color: white !important;
-    height: 55px;
+    height: 150px;
     border-bottom: 1px solid #CFCFCF;
+    padding-bottom: 90px;
 }
 
 .bg-light{
-    background: white!important;
-    background-color: white !important;
+    background-color: #292929 !important;
 }
 
 .icon-adjust{
@@ -16,7 +16,7 @@
 
 
 .nav-color a{
-    color: #9e24bf !important;
+    color: white !important;
 }
 
 img{
@@ -26,38 +26,20 @@ img{
 .text-qrid{
     font-size: 36px;
     font-weight: 700;
-    color: #9e24bf;
+    color: #292929;
     z-index: 2;
     padding: 2px;
     font-family: roboto;
   }
 
 .border-nav{
-    border-right: 1px solid #CFCFCF;
-    border-left: 1px solid #CFCFCF;
     padding: 10px 15px;
     margin-left: -1px;
-    height: 55px;
 }
 
-.border-r-nav{
-    border: none;
-    border-right: 1px solid #CFCFCF;
-    padding: 10px 15px;
-    margin-left: -1px;
-    height: 55px;
-}
-.border-b-nav{
-    border: none;
-    padding: 10px 15px;
-    margin-left: -1px;
-    height: 55px;
-}
 
 @media(max-width: 991.1px){
-    .border-nav,
-    .border-r-nav,
-    .border-b-nav{
+    .border-nav{
         border: none;
     }
     .collapse.show{

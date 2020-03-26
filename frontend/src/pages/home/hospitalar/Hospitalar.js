@@ -1,7 +1,7 @@
+import './Hospitalar.css';
 import React from 'react';
-import './homeCard.css';
 
-class HomeCard extends React.Component{
+class Hospitalar extends React.Component{
 
     constructor(props){
         super(props)   
@@ -21,4 +21,4 @@ class HomeCard extends React.Component{
     }
 }
 
-export default HomeCard;
+export default Hospitalar;
