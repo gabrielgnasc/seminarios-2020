@@ -1,0 +1,14 @@
+.form-animal{
+    padding: 50px;
+    padding-top: 5px;
+}
+
+.btn-salvar{
+    padding: 10px 30px;
+    width: auto;
+    margin-left: calc(100% - 102px);
+}
+
+.m-bt{
+    margin-bottom: 25px;
+}

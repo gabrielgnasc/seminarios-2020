@@ -1,32 +1,26 @@
 import React,{ useState } from 'react';
 import Registrar from  './Registrar';
 import BarraLateral from '../../components/BarraLateral';
-import * as qrr from  './../../shared/images/qrr.png'
+import * as logo from  './../../shared/images/logo.png';
 
 function IndexRegistrar() {
   
-  const widht = window.innerWidth < 865;
-  const [contemBarra, setContemBarra] = useState(!widht);
+  const widht = window.innerWidth;
+  const [contemBarra, setContemBarra] = useState(widht);
 
   window.addEventListener('resize', function(){
-    if (window.innerWidth < 865) {
-        setContemBarra(false)
-    } else {
-        setContemBarra(true)
-    }
+    setContemBarra(window.innerWidth)
   })
 
   function barraLateral(){
-    if(contemBarra){
+    if(contemBarra > 981){
       return(
         <BarraLateral></BarraLateral>
       )
-    }else{
+    }else if(contemBarra < 865) {
       return(
-        <>
-          <p className="text-qrid" >QR Id</p>
-          <img alt="QR-ID" src={qrr} className="img-cel" ></img>
-        </>
+        <div style={{height:250}}>
+        </div>
       )
     }
   }
@@ -35,6 +29,7 @@ function IndexRegistrar() {
     <div className="App-header">
       {barraLateral()}
       <Registrar></Registrar>
+      <img src={logo} className="img-logo" alt="QR Id" ></img>
     </div>
   );
 }

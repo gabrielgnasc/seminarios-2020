@@ -1,4 +1,28 @@
 body{
     background-color: #f2f2f2!important;
 }
+.card-top-n{
+    margin-top: -35px;
+    position: relative;
+    background-color: white;
+    border: 1px solid #c2c2c2;
+    border-radius: 4px;
+    padding: 5px 25px;
+}
 
+.perfil-img{
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.mr-auto.navbar-nav{
+    background-color: #292929!important;
+}
+
+.teste{
+    display: grid;
+    grid-template-columns: 1fr 18fr 25fr 1fr;
+    align-items: center;
+    box-shadow: 2px 3px 4px 3px rgba(0,0,0,.15)!important;
+}

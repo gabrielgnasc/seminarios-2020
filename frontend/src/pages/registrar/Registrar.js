@@ -53,7 +53,7 @@ function Registrar() {
         <div className="center-position">
             <div className="tam-max">
                 <h3 id="id-login" className="card-title">
-                    <Link to="/" className="close float-left" ><MdKeyboardBackspace></MdKeyboardBackspace></Link>
+                    <Link to="/login" className="close float-left" ><MdKeyboardBackspace></MdKeyboardBackspace></Link>
                     Registrar
                 </h3>
                 <hr></hr>
