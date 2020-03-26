@@ -17,7 +17,7 @@ routes.get('/user/:id', UserController.store);
 
 routes.delete('/delete/:id', UserDelete.index);
 
-routes.post('/createUser', CreateUser.index);
+routes.post('/updateUser', UpdateUser.index);
 
 routes.post('/createUser', CreateUser.index);
 
