@@ -1,8 +1,8 @@
 .nav-color{
     background-color: white !important;
-    height: 150px;
-    border-bottom: 1px solid #CFCFCF;
-    padding-bottom: 90px;
+    height: 70px;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 10px;
 }
 
 .bg-light{
@@ -14,10 +14,21 @@
     margin-right: 5px;
 }
 
+.icon-adjust-r{
+    margin-right: 5px;
+    float: right;
+    margin-top: 2px;
+}
+
 
 .nav-color a{
     color: white !important;
 }
+
+.nav-color a.dropdown-item {
+    color: #292929 !important;
+}
+
 
 img{
     width: 60px;
@@ -35,6 +46,12 @@ img{
 .border-nav{
     padding: 10px 15px;
     margin-left: -1px;
+}
+
+.bg-row-at{
+    background-color: transparent;
+    padding: 25px 0px 0px 0px;
+    
 }
 
 
@@ -60,6 +77,37 @@ img{
     .nav-color{
         height: auto;
     }
+}
+
+.border-l-p{
+    border: 2px solid transparent;
+    border-left: 4px solid #4e73df;
+}
+
+
+.border-l-s{
+    border: 1px solid #c2c2c2;
+    border-left: 4px solid #1cc88a;
+}
+
+
+.border-l-i{
+    border: 1px solid #c2c2c2;
+    border-left: 4px solid #36b9cc;
+}
+
+.border-l-w{
+    border: 1px solid #c2c2c2;
+    border-left: 4px solid #f6c43e;
+}
+
+.border-l-d{
+    border: 1px solid #c2c2c2;
+    border-left: 4px solid #e74a3b;
+}
+
+.card-click{
+    cursor: pointer;
 }
 
 

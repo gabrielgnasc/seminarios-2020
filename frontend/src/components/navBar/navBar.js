@@ -1,6 +1,6 @@
 import React from 'react';
 import './navbar.css'
-import {Navbar, Nav} from 'react-bootstrap'
+import {Navbar, Nav, NavDropdown,Card} from 'react-bootstrap'
 import { MdHome } from "react-icons/md"; 
 import {FaUserAlt,FaDog} from "react-icons/fa";
 import {MdChildFriendly, MdLocalHospital} from "react-icons/md";
@@ -19,8 +19,6 @@ class NavBar extends React.Component {
     }
 
     render(){
-        if(this.props.state.user)
-            console.log(this.props.state.user.data)
         return(
             <>
                 <Navbar bg="light" expand="lg" className="nav-color">
@@ -37,28 +35,27 @@ class NavBar extends React.Component {
                                         Home
                                     </Nav.Link>
                                 </div>
-                                <div className="border-nav">
-                                    <Nav.Link onClick={ () => this.props.callBack('hospital')}>
-                                        <MdLocalHospital className="icon-adjust" />
-                                        Hospitalar
-                                    </Nav.Link>
-                                </div>
-                                <div className="border-nav">
-                                    <Nav.Link onClick={ () => this.props.callBack('animal')}>
-                                        <FaDog className="icon-adjust" />
-                                        Animal
-                                    </Nav.Link>
-                                </div>
-                                <div className="border-nav">
-                                    <Nav.Link onClick={ () => this.props.callBack('crianca')}>
-                                        <MdChildFriendly className="icon-adjust" />
-                                        Crianças e PCD
-                                    </Nav.Link>
+                                <div className="border-nav" id="homeC" >
+                                    <NavDropdown title="Alas" id="collasible-nav-dropdown">
+                                        <NavDropdown.Item onClick={ () => this.props.callBack('hospital')}>
+                                            <MdLocalHospital className="icon-adjust" />
+                                            Hospitalar
+                                        </NavDropdown.Item>
+
+                                        <NavDropdown.Item onClick={ () => this.props.callBack('animal')}>
+                                            <FaDog className="icon-adjust" />
+                                            Animal
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Item onClick={ () => this.props.callBack('crianca')}>
+                                            <MdChildFriendly className="icon-adjust" />
+                                            Crianças e PCD
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
                                 </div>
                                 <div className="border-nav">
                                     <Nav.Link  >
                                         <FaUserAlt className="icon-adjust" />
-                                        {this.props.state.user?.data.name}
+                                        {this.props.state.user?.name}
                                         <FiChevronDown className="icon-adjust" style={{marginLeft: 5}} />
                                     </Nav.Link>
                                     
@@ -66,7 +63,7 @@ class NavBar extends React.Component {
                             </Nav>
                         </div>
                     </Navbar.Collapse>
-                </Navbar>
+                </Navbar>                
             </>
         );
     }   

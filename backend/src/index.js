@@ -9,6 +9,8 @@ mongoose.connect('mongodb+srv://seminariosPUC:t86c2Rs6TC09AAgX@cluster0-bs4ii.mo
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true)
 
 app.use(cors({origin: 'http://localhost:3000'}));
 app.use(express.json());
