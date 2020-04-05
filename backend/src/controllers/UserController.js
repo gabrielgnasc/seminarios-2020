@@ -1,5 +1,7 @@
 const User = require('../models/User');
 const Auth = require('../middlewares/auth');
+global.Buffer = global.Buffer || require('buffer').Buffer;
+
 
 module.exports = {
 
@@ -18,5 +20,23 @@ module.exports = {
 
         const users = await User.find();
         return res.json(users);
-    }
+    },
+
+    async getUserByEmail(req , res){
+
+        const {params} = req;
+        const parametros = params.param;
+
+        const list = parametros.split("=");
+        const email = Buffer.from(list[0], 'base64').toString();
+        const index = list[1];
+
+        console.log(email)
+
+        const user = await User.findOne({email});
+        console.log(user)
+
+        return res.json(user.type[index]);
+    } 
+
 }

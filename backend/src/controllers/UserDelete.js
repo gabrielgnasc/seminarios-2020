@@ -12,8 +12,8 @@ module.exports = {
 
         const id = params.id;
 
-        const user = await User.deleteOne( {'_id': id}, (err)=>{ res.json({err});});
-
+        const user = await User.deleteOne( {'_id': id});
+        
         return res.json({ user });
     }
 }

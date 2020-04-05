@@ -8,6 +8,10 @@ var UserSchema = new mongoose.Schema({
         required: true,
         lowercase: true // removes whitespace accidentally
     },
+    avatar:{
+        type:Buffer,
+        required: false,
+    },
     name: {
         type: String,
         required: true,
@@ -30,6 +34,8 @@ UserSchema.pre('save',async function(next){
     this.password = hash;
     next();
 });
+
+
 
 var User = mongoose.model("User", UserSchema);
 
