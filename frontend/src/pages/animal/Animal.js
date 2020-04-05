@@ -1,7 +1,7 @@
 import './Animal.css';
 import React from 'react';
-import api from '../../service'
-import {history} from '../../../shared/history/history'
+import api from '../service'
+import {history} from '../../shared/history/history'
 
 class Animal extends React.Component{
 
@@ -12,7 +12,7 @@ class Animal extends React.Component{
             telefone: null,
             endereco: '',
             email: '',
-            nomeAnimal: '',
+            nome: '',
             cidade: '',
             idade: null,
             raca: '',
@@ -21,16 +21,30 @@ class Animal extends React.Component{
             vacinas: '',
             caracteristica: '',
             alimentacao: '',
-            typeId: btoa(this.props.user.email) + (this.props.user.type.length).toString(),
+            typeId: '',
             type: 'Animal'
         };
-        
-        
+
+        this.user = null;
+        this.getUser();
+    }
+
+    getUser(){
+        const token = localStorage.getItem('token');
+        const headers = {'Authorization': 'Bearer ' + token}
+        api.get('/token/' + token ,  { headers }).then((res) =>{
+            this.user =res.data;
+            this.setState({typeId: btoa(this.user.email) + (this.user.type.length).toString()})
+            if(res.data.error){
+                history.push('/login');
+            }
+
+        })
     }
 
     updateUser(e){
         e.preventDefault()
-        let user = this.props.user;
+        let user = this.user;
         user.type.push(this.state)
         const token = localStorage.getItem('token');
         const headers = {'Authorization': 'Bearer ' + token}
@@ -44,8 +58,8 @@ class Animal extends React.Component{
     
     render(){
         return(
-            <>
-                <div className="home-bg m-bt" >
+            <div className="container">
+                <div className="home-bg m-bt left-to-right" >
                     <h2 style={{paddingLeft: 15, textAlign:"center"}} >Preencha com os dados do seu animal: </h2>
                     <form className="form-animal row" onSubmit={(e) => this.updateUser(e)} >
                         <div className="form-group col-md-7">
@@ -66,7 +80,7 @@ class Animal extends React.Component{
                             <input type="email" className="input-login" placeholder="E-mail"  onChange={ (e) => this.setState({email: e.target.value})} />
                         </div>
                         <div className="form-group col-md-6">
-                            <input type="text" className="input-login" placeholder="Agora o nome do seu animalzinho" required onChange={ (e) => this.setState({nomeAnimal: e.target.value})} />
+                            <input type="text" className="input-login" placeholder="Agora o nome do seu animalzinho" required onChange={ (e) => this.setState({nome: e.target.value})} />
                         </div>
                         <div className="form-group col-md-4">
                             <input type="number" className="input-login" placeholder="Idade"  onChange={ (e) => this.setState({idade: e.target.value})} />
@@ -102,7 +116,7 @@ class Animal extends React.Component{
                     </form> 
                 </div>
                 
-            </>
+            </div>
         );
     }
 }

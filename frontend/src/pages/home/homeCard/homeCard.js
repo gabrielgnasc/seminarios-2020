@@ -1,45 +1,72 @@
-import React from 'react';
+import React  from 'react';
 import './homeCard.css';
-import * as img from '../../../shared/images/qrw.png';
+import QRCode from 'qrcode.react';
+import { MdChildFriendly, MdLocalHospital } from "react-icons/md";
+import { FaDog } from "react-icons/fa";
+
 
 class HomeCard extends React.Component{
 
-    constructor(props){
-        super(props)   
-    }
-
-    createcard(){
+    createCard(){
         let card = []
     
         for (let i = 0; i < this.props?.user?.type?.length ; i++) {
+
+            var url = "http://localhost:3000/" + this.props.user?.type[i].typeId; 
             card.push(
-                <div className="meu-card" key={this.props.user?.type[i].typeId}>
-                    <img className="meu-card-img" src={img} alt="qr" />
-                    <div className="meu-card-body">
-                        <h4>Ala:  <span>{this.props.user?.type[i]?.type}</span></h4>
+                <div className="col-md-6" key={this.props.user?.type[i].typeId}> 
+                    <div className="meu-card left-to-right" >
 
-                        <h4> 
-                            {this.props?.user?.type[i]?.type === 'Crianças e PCD' ? 'Nome: ' + this.props.user?.type[i]?.nome : null }
-                            {this.props?.user?.type[i]?.type === 'Animal' ? 'Nome: ' + this.props.user?.type[i]?.nomeAnimal : null }  
-                            {this.props?.user?.type[i]?.type === 'Hospitalar' ? 'Nome: ' + this.props.user?.type[i]?.nome : null  }     
-                        </h4>
-                        <h4> Telefone: <span>{this.props.user?.type[0]?.telefone}</span>  </h4>
+                        <QRCode level={"H"} size={160} value={url}  id={this.props.user?.type[i].typeId} />
 
+                        <div className="meu-card-body">
+
+                            <h2 className="icon-ala" > 
+                                {this.props?.user?.type[i]?.type === 'Crianças e PCD' ? <MdChildFriendly className="icon-adjust" /> : null }
+                                {this.props?.user?.type[i]?.type === 'Animal' ? <FaDog className="icon-adjust" />  : null }  
+                                {this.props?.user?.type[i]?.type === 'Hospitalar' ? <MdLocalHospital className="icon-adjust" /> : null  }     
+                            </h2> 
+
+                            <h4> 
+                                {this.props?.user?.type[i]?.type === 'Crianças e PCD' ?  this.props.user?.type[i]?.nome : null }
+                                {this.props?.user?.type[i]?.type === 'Animal' ? this.props.user?.type[i]?.nome : null }  
+                                {this.props?.user?.type[i]?.type === 'Hospitalar' ? this.props.user?.type[i]?.nome : null  }    
+                            </h4>
+                
+                        </div>
+                        <div>
+                            <a onClick={() => this.downloadQR(this.props.user?.type[i].typeId, this.props.user?.type[i].nome)}> D </a>
+                        </div>
                     </div>
                 </div>
             )
         }
+
+        
         return card
     }
+
+    downloadQR(id, nome){
+        const canvas = document.getElementById(id);
+        const pngUrl = canvas
+          .toDataURL("image/png")
+          .replace("image/png", "image/octet-stream");
+        let downloadLink = document.createElement("a");
+        downloadLink.href = pngUrl;
+        downloadLink.download = "QR-"+ nome.replace(" ", "_") + ".png";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    };
 
 
     render(){
         return(
             <>
                 <div className="row">
-                    <div className="col-md-6"> 
-                        {this.createcard()}
-                    </div>
+                   
+                    {this.createCard()}
+                   
                 </div>
                
                 

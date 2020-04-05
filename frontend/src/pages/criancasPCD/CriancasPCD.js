@@ -1,7 +1,7 @@
 import './CriancasPCD.css';
 import React from 'react';
-import api from '../../service'
-import {history} from '../../../shared/history/history'
+import api from '../service'
+import {history} from '../../shared/history/history'
 
 class CriancasPCD extends React.Component{
 
@@ -22,16 +22,30 @@ class CriancasPCD extends React.Component{
             adicionais: '',
             cidade:'',
             genero:'',
-            typeId: btoa(this.props.user.email) + (this.props.user.type.length).toString(),
+            typeId:'',
             type: 'Crianças e PCD'
         };
+        this.user = null;
+        this.getUser();
+    }
+
+    getUser(){
+        const token = localStorage.getItem('token');
+        const headers = {'Authorization': 'Bearer ' + token}
+        api.get('/token/' + token ,  { headers }).then((res) =>{
+            this.user =res.data;
+            this.setState({typeId: btoa(this.user.email) + (this.user.type.length).toString()})
+            if(res.data.error){
+                history.push('/login');
+            }
+
+        })
     }
 
     updateUser(e){
         e.preventDefault()
-        this.setState({typeId : btoa(this.props.user.email)+ btoa('CriancasPCD') + (this.props.user.type.length).toString()})
-
-        let user = this.props.user;
+    
+        let user = this.user;
         user.type.push(this.state)
 
         const token = localStorage.getItem('token');
@@ -46,8 +60,8 @@ class CriancasPCD extends React.Component{
 
     render(){
         return(
-            <>
-                <div className="home-bg m-bt" >
+            <div className="container">
+                <div className="home-bg m-bt left-to-right" >
                     <h2 style={{paddingLeft: 15, textAlign:"center"}} >Preencha os dados abaixo : </h2>
                     <form className="form-animal row" onSubmit={(e) => this.updateUser(e)}  >
                         <div className="form-group col-md-8">
@@ -110,7 +124,7 @@ class CriancasPCD extends React.Component{
                     </form> 
                 </div>
                 
-            </>
+            </div>
         );
     }
 }

@@ -6,4 +6,4 @@ Feito pelos alunos da PUC-MG
 Gabriel Gomes Nascimento - Desenvolvedor
 Thiago Ribeiro Castilho -  Marketing
 Thiago Sérvulo Guimarães - Idealizador
-Eduardo Gonzaga Mendonça - Idealizador
+Eduardo Mendonça Gonzaga Sampaio - Idealizador
