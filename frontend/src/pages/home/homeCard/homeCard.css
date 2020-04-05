@@ -3,7 +3,9 @@
     background-color: white;
     border-radius: 5px ;
     margin-top: 25px;
+    border: 1px solid #c2c2c2;
     border-top: 5px solid #499dff;
+    box-shadow: -1px 3px 4px 4px rgba(0,0,0,.15)!important;
 }
 
 .meu-card{
@@ -11,7 +13,7 @@
     border-radius: 7px ;
     margin-top: 25px;
     border: 1px solid #C2C2C2;
-    padding: 0px;
+    padding: 25px;
     display: flex;
 }
 
@@ -28,17 +30,14 @@
 
 .meu-card-body{
     width: 100%;
-    padding: 25px;
-    padding-top: 45px;
+    padding-left: 25px;
+}
+.icon-ala{
+    font-size: 80px;
 }
 
 @media(max-width: 650px){
-    .meu-card-img{
-        width: 60%;
-        height: auto;
-        border-radius: 7px;
-        border: 1px solid transparent;
-    }
+    
     .meu-card{
         text-align: center;
         display: block;

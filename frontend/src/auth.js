@@ -11,6 +11,7 @@ const isAuth = () => {
 const PrivateRoute = ( props) => {
     return(
         isAuth() ? (
+            
             <Route exact path={props.path} component={props.component} />
         ):(
             <Redirect 

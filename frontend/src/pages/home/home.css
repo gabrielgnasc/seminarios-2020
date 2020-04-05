@@ -1,10 +1,11 @@
 body{
-    background-color: white!important;
+    background-color: #f2f2f2 !important;
+    overflow-x: hidden;
 }
 .card-top-n{
     position: relative;
     background-color: white;
-    border-radius: 4px;
+    border-radius: 27px;
     padding: 5px 25px;
 }
 
@@ -20,6 +21,25 @@ body{
 .config-btn{
     justify-self: end;
 }
+.left-to-right{
+    animation-name: ani1;
+    animation-duration: 1s;
+}
+@keyframes ani1 {
+    from {transform: translateX(100vw)}
+    70%{transform: translateX(-10px)}
+    72%{transform: translateX(-9px)}
+    74%{transform: translateX(-8px)}
+    75%{transform: translateX(-7px)}
+    76%{transform: translateX(-6px)}
+    77%{transform: translateX(-5px)}
+    78%{transform: translateX(-4px)}
+    79%{transform: translateX(-3px)}
+    80%{transform: translateX(-2px)}
+    81%{transform: translateX(-1px)}
+    82%{transform: translateX(0px)}
+    to {transform: translateX(0px)}
+  }
 
 .teste{
     padding: 15px;
