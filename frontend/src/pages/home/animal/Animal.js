@@ -1,5 +1,7 @@
 import './Animal.css';
-import React, {useState} from 'react';
+import React from 'react';
+import api from '../../service'
+import {history} from '../../../shared/history/history'
 
 class Animal extends React.Component{
 
@@ -7,31 +9,45 @@ class Animal extends React.Component{
         super(props) 
         this.state = {
             nomeDono: '',
-            telefone: '',
+            telefone: null,
             endereco: '',
             email: '',
             nomeAnimal: '',
             cidade: '',
-            idade: '',
+            idade: null,
             raca: '',
             genero: '',
-            peso: '',
+            peso: null,
             vacinas: '',
             caracteristica: '',
-            alimentacao: ''
+            alimentacao: '',
+            typeId: btoa(this.props.user.email) + (this.props.user.type.length).toString(),
+            type: 'Animal'
         };
+        
+        
     }
 
-    teste(){
-        console.log(this.state)
+    updateUser(e){
+        e.preventDefault()
+        let user = this.props.user;
+        user.type.push(this.state)
+        const token = localStorage.getItem('token');
+        const headers = {'Authorization': 'Bearer ' + token}
+        api.post('/updateUser',{user: user} ,{ headers }).then((res) =>{
+            history.push('/');
+        },(error) => {
+            alert(error)
+        })
     }
 
+    
     render(){
         return(
             <>
                 <div className="home-bg m-bt" >
                     <h2 style={{paddingLeft: 15, textAlign:"center"}} >Preencha com os dados do seu animal: </h2>
-                    <form className="form-animal row">
+                    <form className="form-animal row" onSubmit={(e) => this.updateUser(e)} >
                         <div className="form-group col-md-7">
                             <input type="text" className="input-login" placeholder="Seu nome" onChange={ (e) => this.setState({nomeDono: e.target.value})} required/>
                             <small id="emailHelp" className="form-text text-muted">Seu nome completo</small>
@@ -81,7 +97,7 @@ class Animal extends React.Component{
                         </div>
 
                        <div className="col-12 justify-items-end">
-                            <button type="button" onClick={() => this.teste()} className="btn btn-primary bg-roxo btn-salvar offset-md-10">Salvar</button>
+                            <button type="submit" className="btn btn-primary bg-roxo btn-salvar offset-md-10">Salvar</button>
                        </div>
                     </form> 
                 </div>

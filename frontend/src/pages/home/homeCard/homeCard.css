@@ -3,4 +3,47 @@
     background-color: white;
     border-radius: 5px ;
     margin-top: 25px;
+    border-top: 5px solid #499dff;
+}
+
+.meu-card{
+    background-color: white;
+    border-radius: 7px ;
+    margin-top: 25px;
+    border: 1px solid #C2C2C2;
+    padding: 0px;
+    display: flex;
+}
+
+.meu-card-img{
+    width: 200px;
+    height: 200px;
+    border-radius: 7px;
+    border: 1px solid transparent;
+}
+
+.mr-auto.navbar-nav{
+    background-color: #292929!important;
+}
+
+.meu-card-body{
+    width: 100%;
+    padding: 25px;
+    padding-top: 45px;
+}
+
+@media(max-width: 650px){
+    .meu-card-img{
+        width: 60%;
+        height: auto;
+        border-radius: 7px;
+        border: 1px solid transparent;
+    }
+    .meu-card{
+        text-align: center;
+        display: block;
+    }
+    .meu-card-body{
+        text-align: start;
+    }
 }
