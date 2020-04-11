@@ -31,12 +31,12 @@ module.exports = {
         const email = Buffer.from(list[0], 'base64').toString();
         const index = list[1];
 
-        console.log(email)
-
         const user = await User.findOne({email});
-        console.log(user)
 
-        return res.json(user.type[index]);
+        const infos = user.type[index];
+        infos.typeId = null;
+
+        return res.json(infos);
     } 
 
 }
