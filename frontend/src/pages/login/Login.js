@@ -7,17 +7,22 @@ import {history} from '../../shared/history/history'
 
 function Login() {
 
+    if(localStorage.getItem('token')){
+        history.push('/');
+    }
     
     const [email, setEmail] = useState(''); 
     const [senha, setSenha] = useState('');
     const [erro, setErro] = useState('');
     const [show, setShow] = useState(false);
+    
     async function logar(e){
         e.preventDefault();
 
         try{
+            
             const response = await (await api.post('/login',{email: email, password: senha }))
-            console.log(response)
+
             if(response.status === 200){
                 if(response.data.token)
                 {

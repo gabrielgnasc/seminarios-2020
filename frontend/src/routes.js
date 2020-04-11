@@ -22,9 +22,9 @@ const Routes = () =>(
             <Route exact path="/view/:id" component={View} ></Route>
             <Route exact path="/"><Redirect to={{pathname: '/home'}} /></Route>
             <PrivateRoute exact path="/home" component={Home} > </PrivateRoute>
-            <PrivateRoute exact path="/home/hospitalar" component={Hospitalar} > </PrivateRoute>
-            <PrivateRoute exact path="/home/animais" component={Animal} > </PrivateRoute>
-            <PrivateRoute exact path="/home/criancas-e-especiais" component={CriancasPCD} > </PrivateRoute>
+            <PrivateRoute exact path="/home/hospitalar/:id" component={Hospitalar} > </PrivateRoute>
+            <PrivateRoute exact path="/home/animais/:id" component={Animal} > </PrivateRoute>
+            <PrivateRoute exact path="/home/criancas-e-especiais/:id" component={CriancasPCD} > </PrivateRoute>
             <PrivateRoute component={NotFound} />
         </Switch>
     </Router>

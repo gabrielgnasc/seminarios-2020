@@ -12,20 +12,28 @@ import api from '../service';
       
             const {match} = this.props;
             this.id = match.params.id;
-            console.log(this.id)
 
-            this.getUser()
-              
+            this.getUser();     
         }
     
         getUser(){
+            const headers = {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+            try{
+                api.get('/userType/' + this.id, {headers }).then((res) =>{
+                    this.setState({type: res.data})
+                    if(res.data.length === 0 ){
+                        alert('teste')
+                    }
+                })
 
-            api.get('/userType/' + this.id ).then((res) =>{
-                this.setState({type: res.data})
-                if(res.data.length === 0 ){
-                    alert('teste')
-                }
-            })
+            }catch(error){
+                alert('dçlfadf')
+                alert(error.message)
+            }
+            
         }
 
         gerarPagina(){
@@ -34,20 +42,28 @@ import api from '../service';
 
             if(dados !== null){
             Object.keys(dados).forEach(function(item){
-                console.log(item + " = " + dados[item]);
-                labels.push(
-                    <div>
-                        <label> 
-                            {item + ": " + dados[item]}
-                        </label>
+                if(dados[item]){
+                    
+                    labels.push(
 
-                    </div>
-                )
+                        <div className="col-md-6" key={item} >
+                            <h6> 
+                                { 
+                                    item.split(/(?=[A-ZÀ-Ú])/).join(" ")
+                                        .replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) 
+                                }:
+                            </h6>
+                            <textarea className="input-login" disabled>
+                                {dados[item]}
+                            </textarea>
+                        </div>
+                    );
+                }
             });
             }
 
 
-            return ( <div> {labels} </div>)
+            return ( <div className="row"> {labels} </div>)
         }
     
        
@@ -56,7 +72,15 @@ import api from '../service';
             
             return(
                 <div className="container">
-                    {this.gerarPagina()}
+                    <div className="card shadow" style={{marginTop:35}}>
+                        <div className="card-header">
+                            <h2>Informações do Código lido</h2>
+                        </div>
+                        <div className="card-body" style={{padding:25}}>
+                           {this.gerarPagina()}       
+                        </div>
+                    </div>
+                    
                 </div>
             );
         }
