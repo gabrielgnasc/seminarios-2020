@@ -28,11 +28,11 @@ class Home extends React.Component{
 
 
     render(){
-        console.log(this.state)
+       
         return(
             <>
                 {/* <NavBar state={this.state} callBack={this.pageReturn.bind(this)} ></NavBar> */}
-                <div className="container-fuid" style={{backgroundColor: '#F2F2F2', paddingTop: 60}} >
+                <div className="container-fuid" style={{paddingTop: 60}} >
                     <div className="container" >
                         <div className="card-top-n teste" >
                             <label style={{marginBottom: 0}} >
@@ -49,7 +49,6 @@ class Home extends React.Component{
                         </div>
                     </div>
                 </div>
-                <p style={{textAlign: 'center', marginTop:30}}> QR Id © 2020. Todos os direitos reservados</p>
             </>
         );
     }

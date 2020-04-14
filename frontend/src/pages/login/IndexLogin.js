@@ -19,7 +19,7 @@ function IndexLogin() {
       )
     }else if(contemBarra < 865) {
       return(
-        <div style={{height:250}}>
+        <div style={{height:40}}>
         </div>
       )
     }

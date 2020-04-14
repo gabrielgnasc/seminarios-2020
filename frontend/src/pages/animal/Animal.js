@@ -1,30 +1,37 @@
 import './Animal.css';
 import React from 'react';
-import api from '../service'
-import {history} from '../../shared/history/history'
+import api from '../service';
+import {history} from '../../shared/history/history';
+import {TextField} from '@material-ui/core';
 
 class Animal extends React.Component{
 
     constructor(props){
         super(props) 
         this.state = {
-            nomeDono: '',
-            telefone: null,
+            nomeDoDono: '',
+            telefone: '',
             endereco: '',
             email: '',
             nome: '',
             cidade: '',
-            idade: null,
+            idade: '',
             raca: '',
             genero: '',
-            peso: null,
+            peso: '',
             vacinas: '',
             caracteristica: '',
             alimentacao: '',
             typeId: '',
-            type: 'Animal'
+            type: 'animais'
         };
 
+
+        const {match} = this.props;
+        if(match !== undefined){
+            this.id = match.params.id;
+        }
+       
         this.user = null;
         this.getUser();
     }
@@ -34,7 +41,17 @@ class Animal extends React.Component{
         const headers = {'Authorization': 'Bearer ' + token}
         api.get('/token/' + token ,  { headers }).then((res) =>{
             this.user =res.data;
-            this.setState({typeId: btoa(this.user.email) + (this.user.type.length).toString()})
+            this.setState({typeId: btoa(this.user.email) + (this.user.type.length).toString()});
+            if(this.id){
+                this.user.type.map((types) =>{
+                    if(types.typeId === this.id){
+                        this.setState(state =>{
+                            return types;               
+                        });
+                    }
+                    return null;
+                });
+            }
             if(res.data.error){
                 history.push('/login');
             }
@@ -45,7 +62,15 @@ class Animal extends React.Component{
     updateUser(e){
         e.preventDefault()
         let user = this.user;
-        user.type.push(this.state)
+        
+        var email = atob(this.id.split("=")[0])
+        if(email === this.user.email ){
+            const index = this.id.split("=")[this.id.split("=").length - 1]; 
+            user.type[index] = this.state;
+        }else{
+            user.type.push(this.state)
+        }
+
         const token = localStorage.getItem('token');
         const headers = {'Authorization': 'Bearer ' + token}
         api.post('/updateUser',{user: user} ,{ headers }).then((res) =>{
@@ -63,55 +88,114 @@ class Animal extends React.Component{
                     <h2 style={{paddingLeft: 15, textAlign:"center"}} >Preencha com os dados do seu animal: </h2>
                     <form className="form-animal row" onSubmit={(e) => this.updateUser(e)} >
                         <div className="form-group col-md-7">
-                            <input type="text" className="input-login" placeholder="Seu nome" onChange={ (e) => this.setState({nomeDono: e.target.value})} required/>
+
+                            <TextField type="text" className="inputForm" value={this.state?.nomeDoDono} label="Seu nome" variant="outlined" 
+                            onChange={ (e) => this.setState({nomeDoDono: e.target.value})} required/>
                             <small id="emailHelp" className="form-text text-muted">Seu nome completo</small>
+                        
                         </div>
+                        
                         <div className="form-group col-md-5">
-                            <input type="text" className="input-login" placeholder="Telefone"  onChange={ (e) => this.setState({telefone: e.target.value})} required/>
+                            
+                            <TextField type="number" inputProps={{minLength: 8 }} className="inputForm" value={this.state?.telefone} label="Telefone"  variant="outlined" 
+                            onChange={ (e) => this.setState({telefone: e.target.value})} required/>
+
                         </div>
+                       
                         <div className="form-group col-md-7">
-                            <input type="text" className="input-login" placeholder="Endereço"  onChange={ (e) => this.setState({endereco: e.target.value})} />
+                          
+                            <TextField type="text" className="inputForm" value={this.state?.endereco} label="Endereço"  variant="outlined" 
+                            onChange={ (e) => this.setState({endereco: e.target.value})}/>
                             <small id="emailHelp" className="form-text text-muted">Rua, Nº e Bairro </small>
+                        
                         </div>
+                       
                         <div className="form-group col-md-5">
-                            <input type="text" className="input-login" placeholder="Cidade"  onChange={ (e) => this.setState({cidade: e.target.value})} />
+                           
+                            <TextField type="text" className="inputForm" value={this.state?.cidade} label="Cidade"  variant="outlined" 
+                            onChange={ (e) => this.setState({cidade: e.target.value})} />
+                       
                         </div>
+                        
                         <div className="form-group col-md-6">
-                            <input type="email" className="input-login" placeholder="E-mail"  onChange={ (e) => this.setState({email: e.target.value})} />
+                            
+                            <TextField type="email" className="inputForm" value={this.state?.email} label="E-mail"  variant="outlined" 
+                            onChange={ (e) => this.setState({email: e.target.value})} required/>
+                        
                         </div>
+                       
                         <div className="form-group col-md-6">
-                            <input type="text" className="input-login" placeholder="Agora o nome do seu animalzinho" required onChange={ (e) => this.setState({nome: e.target.value})} />
+                            
+                            <TextField type="text" className="inputForm" value={this.state?.nome} label="Agora o nome do seu animalzinho"  variant="outlined"
+                             onChange={ (e) => this.setState({nome: e.target.value})} required/>
+                        
                         </div>
+
                         <div className="form-group col-md-4">
-                            <input type="number" className="input-login" placeholder="Idade"  onChange={ (e) => this.setState({idade: e.target.value})} />
+                           
+                            <TextField type="number" className="inputForm" value={this.state?.idade} label="Idade" variant="outlined" 
+                            inputProps={{min: 0 }} onChange={ (e) => this.setState({idade: e.target.value})} />
+                           
                             <small id="emailHelp" className="form-text text-muted">A idade dele também, se achar importante!</small>
+                        
                         </div>
+                        
                         <div className="form-group col-md-4">
-                            <input type="text" className="input-login" placeholder="Raça"  onChange={ (e) => this.setState({raca: e.target.value})} />
+                           
+                            <TextField type="text" className="inputForm" value={this.state?.raca} label="Raça"  variant="outlined" 
+                            inputProps={{min: 0 }} onChange={ (e) => this.setState({raca: e.target.value})} />
+                            
                             <small id="emailHelp" className="form-text text-muted">Raça não importa, ele é lindo</small>
+                        
                         </div>
+                        
                         <div className="form-group col-md-4">
-                            <input type="text" className="input-login" placeholder="Peso"  onChange={ (e) => this.setState({peso: e.target.value})} />
+                        
+                            <TextField type="text" className="inputForm" value={this.state?.peso} label="Peso"  variant="outlined" 
+                            inputProps={{min: 0 }} onChange={ (e) => this.setState({peso: e.target.value})} />
+                        
                             <small id="emailHelp" className="form-text text-muted">Sera que você sabe?</small>
+                       
                         </div>
+                       
                         <div className="form-group col-md-3">
-                            <input type="text" className="input-login" placeholder="Gênero"  onChange={ (e) => this.setState({genero: e.target.value})} />
+                       
+                            <TextField type="text" className="inputForm" value={this.state?.genero} label="Gênero"  variant="outlined" 
+                            onChange={ (e) => this.setState({genero: e.target.value})} />
+                       
                         </div>
+                       
                         <div className="form-group col-md-4">
-                            <input type="text" className="input-login" placeholder="Características" required onChange={ (e) => this.setState({caracteristica: e.target.value})} />
+                       
+                            <TextField type="text" className="inputForm" value={this.state?.caracteristica} label="Características"
+                            variant="outlined" onChange={ (e) => this.setState({caracteristica: e.target.value})} required/>
+                       
                             <small id="emailHelp" className="form-text text-muted">Bravo, amável ou carente?</small>
+                       
                         </div>
+                       
                         <div className="form-group col-md-5">
-                            <input type="text" className="input-login" placeholder="Alimentação"  onChange={ (e) => this.setState({alimentacao: e.target.value})} />
+                       
+                            <TextField type="text" className="inputForm" value={this.state?.alimentacao} label="Alimentação" 
+                            variant="outlined" onChange={ (e) => this.setState({alimentacao: e.target.value})} />
+                       
                             <small id="emailHelp" className="form-text text-muted">Aposto que come até pedra</small>
+                       
                         </div>
+                       
                         <div className="form-group col-md-12">
-                            <textarea type="text" rows="2" className="input-login" placeholder="Vacinas"  onChange={ (e) => this.setState({vacinas: e.target.value})} />
+                       
+                            <TextField multiline type="text" rows="2" className="inputForm" value={this.state?.vacinas} label="Vacinas"  variant="outlined" 
+                            onChange={ (e) => this.setState({vacinas: e.target.value})} />
+                       
                             <small id="emailHelp" className="form-text text-muted">Coloque todas as que lembrar :)</small>
+                       
                         </div>
 
                        <div className="col-12 justify-items-end">
+                       
                             <button type="submit" className="btn btn-primary bg-roxo btn-salvar offset-md-10">Salvar</button>
+                       
                        </div>
                     </form> 
                 </div>

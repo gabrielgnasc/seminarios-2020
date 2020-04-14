@@ -1,12 +1,14 @@
 body{
-    background-color: #f2f2f2 !important;
+    background-color: #292929 !important;
     overflow-x: hidden;
 }
 .card-top-n{
     position: relative;
-    background-color: white;
+    background-color: #bb1688;
     border-radius: 27px;
     padding: 5px 25px;
+    color: #FFF;
+    font-weight: 400;
 }
 
 .perfil-img{
@@ -20,6 +22,11 @@ body{
 }
 .config-btn{
     justify-self: end;
+    color: #fff!important;
+}
+.config-btn:hover{
+    justify-self: end;
+    color: #fff!important;
 }
 .left-to-right{
     animation-name: ani1;

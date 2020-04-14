@@ -4,25 +4,27 @@
     border-radius: 5px ;
     margin-top: 25px;
     border: 1px solid #c2c2c2;
-    border-top: 5px solid #499dff;
+    border-top: 5px solid #bb1688;
     box-shadow: -1px 3px 4px 4px rgba(0,0,0,.15)!important;
 }
 
 .meu-card{
     background-color: white;
-    border-radius: 7px ;
-    margin-top: 25px;
+    border-radius: 7px;
+    margin-top: 10px;
     border: 1px solid #C2C2C2;
-    padding: 25px;
+    padding: 12px;
+    padding-right: 0px;
     display: flex;
+
 }
 
-.meu-card-img{
-    width: 200px;
-    height: 200px;
-    border-radius: 7px;
-    border: 1px solid transparent;
+.icon-adjust-home{
+    margin-top: -3px;
+    margin-right: 5px;
+    color: #292929;
 }
+
 
 .mr-auto.navbar-nav{
     background-color: #292929!important;
@@ -30,19 +32,72 @@
 
 .meu-card-body{
     width: 100%;
-    padding-left: 25px;
+    padding-left: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    max-height: 186px;
 }
+
+.div-resumo{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 155px;
+}
+
+.div-prin{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.div-resumo p{
+   font-size: 10px;
+   margin-bottom: 1px;
+   white-space: nowrap;
+}
+
 .icon-ala{
     font-size: 80px;
 }
 
-@media(max-width: 650px){
+.config-card{
+    height: 106px;
+    width: 37px;
+    z-index: 5;
+    background-color: transparent;
+    border-radius: 4px;
+    margin-top: 0px;
+    margin-right: 0px;
+    position: absolute;
+    right: 16px;
+    top: 30px;
+}
+
+.config-card.top-to-down button{
+    height: 33px;
+    width: 35px;
+    background-color: transparent;
+    border: 1px solid #29292900;
+    margin-bottom: 5px;
+    animation-duration: 0ms;
+}
+
+@media(max-width: 991.5px){
+    .qr-code{
+        width: 100px !important;
+        height: 100px !important;
+    }
     
     .meu-card{
         text-align: center;
-        display: block;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
     .meu-card-body{
         text-align: start;
     }
 }
+

@@ -4,26 +4,13 @@ import Navbar from './components/navBar/navBar'
 
 function App() {
 
-    function logado(){
-        if(localStorage.getItem('token')){
-            return (
-               <> 
-                    <Navbar></Navbar>
-                    <Routes></Routes> 
-                </> 
-                
-            );
-        }else{
-            return <Routes></Routes>  
-        }
-    }
-
     return(
         <>
-              {logado()}
+            <Navbar></Navbar>
+            <Routes></Routes> 
+            <p style={{textAlign: 'center', marginTop:30,color:'#FFF' }}> QR Id © 2020. Todos os direitos reservados</p>
         </>
     )  
 } 
-
 
 export default App;
