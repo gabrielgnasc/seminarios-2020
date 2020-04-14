@@ -5,14 +5,19 @@ const cors = require('cors');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://seminariosPUC:t86c2Rs6TC09AAgX@cluster0-bs4ii.mongodb.net/test?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+async function  connect(){
+    await mongoose.connect('mongodb+srv://seminariosPUC:t86c2Rs6TC09AAgX@cluster0-bs4ii.mongodb.net/test?retryWrites=true&w=majority', {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+}
+
+connect();
+
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true)
 
-app.use(cors({origin: 'http://localhost:3000'}));
+app.use(cors({origin: '*'}));
 app.use(express.json());
 app.use(routes);
 
