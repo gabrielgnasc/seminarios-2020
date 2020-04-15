@@ -8,17 +8,17 @@ const isAuth = () => {
     return false;
 }
 
-const PrivateRoute = ( props) => {
+const PrivateRoute = ({component: Component, ...rest}) => {
     return(
         isAuth() ? (
             
-            <Route exact path={props.path} component={props.component} />
+            <Route exact path={rest.path} component={rest.component} render={(props) => <Component {...rest} />} />
         ):(
             <Redirect 
                 to={{
                     pathname: '/login', 
                     state : { 
-                        from: props.location, 
+                        from: rest.location, 
                         message: "Usuário não autorizado"
                     }
                 }} 

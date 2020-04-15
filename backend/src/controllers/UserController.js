@@ -29,14 +29,25 @@ module.exports = {
 
         const list = parametros.split("=");
         const email = Buffer.from(list[0], 'base64').toString();
-        const index = list[1];
 
         const user = await User.findOne({email});
 
-        const infos = user.type[index];
-        infos.typeId = null;
+        if(user){
+            var info;
 
-        return res.json(infos);
+            user.type.map((types) => {
+                if(types.typeId === parametros){
+                    info = types;
+                    info.typeId = null;
+                }
+            })
+
+            return res.json(info);
+
+        }
+
+        return res.json({'error': 'Não foi possível localizar o código lido!' })
+
     } 
 
 }

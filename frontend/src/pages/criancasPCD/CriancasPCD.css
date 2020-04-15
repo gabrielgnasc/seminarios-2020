@@ -26,5 +26,23 @@
     box-shadow: 0 0 0 0.01rem #29292900;
 }
 
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff!important;
+    text-decoration: none;
+    background-color: #bb1688;
+    padding: 15px;
+}
+.dropdown-item, .dropdown-item {
+    padding: 15px;
+}
+.dropdown-item:hover {
+    padding: 15px;
+    background-color: #bb168844;
+}
+
+.navbar-nav .dropdown-menu {
+   padding: 0px;
+   border-radius: 0px;
+}
 
 

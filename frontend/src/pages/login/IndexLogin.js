@@ -1,23 +1,44 @@
-import React,{ useState } from 'react';
+import React from 'react';
 import Login from  './Login';
 import BarraLateral from '../../components/BarraLateral';
 import * as logo from  './../../shared/images/logo.png';
+import {history} from '../../shared/history/history'
 
-function IndexLogin() {
+class IndexLogin extends React.Component {
+
   
-  const widht = window.innerWidth;
-  const [contemBarra, setContemBarra] = useState(widht);
+  constructor(props){
+    super(props);
 
-  window.addEventListener('resize', function(){
-    setContemBarra(window.innerWidth)
-  })
+    const widht = window.innerWidth;
+     
+    this.state = {
+      contemBarra: widht
+    };
 
-  function barraLateral(){
-    if(contemBarra > 981){
+    this.resize();
+
+    this.setStateLog = this.setStateLog.bind(this)
+  }
+
+  resize(){
+    window.addEventListener('resize',  ()=>{
+        this.setState({contemBarra: window.innerWidth});
+    });
+  }
+  
+
+  setStateLog(valor){
+    this.props.setLogado(valor);
+    history.push('/');
+  }
+
+  barraLateral(){
+    if(this.state.contemBarra > 981){
       return(
         <BarraLateral></BarraLateral>
       )
-    }else if(contemBarra < 865) {
+    }else if(this.state.contemBarra < 865) {
       return(
         <div style={{height:40}}>
         </div>
@@ -25,13 +46,15 @@ function IndexLogin() {
     }
   }
 
-  return (
-    <div className="App-header">
-      {barraLateral()}
-      <Login></Login>
-      <img src={logo} className="img-logo" alt="QR Id" ></img>
-    </div>
-  );
+  render(){
+    return(
+        <div className="App-header">
+            {this.barraLateral()}
+            <Login func={this.setStateLog} ></Login>
+            <img src={logo} className="img-logo" alt="QR Id" ></img>
+        </div>
+    );
+  }
 }
 
 export default IndexLogin;
