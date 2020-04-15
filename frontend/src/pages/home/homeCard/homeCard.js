@@ -89,6 +89,19 @@ class HomeCard extends React.Component{
             )
         }
 
+        if(this.state?.user?.type?.length === 0){
+            card = 
+                <div className="col-md-12">
+                     <div className="meu-card" >
+                        <div className="meu-card-body">
+                            <h2>Ooops! Você ainda não possui um QR Id</h2><br/>
+                            <h5>Crie quantos quiser !</h5>
+                        </div>
+                     </div>
+                </div>
+            ;
+        }
+
         return card
     }
 

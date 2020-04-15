@@ -14,11 +14,13 @@ import {Router, Route, Switch, Redirect} from 'react-router';
 
 
 
-const Routes = () =>(
+function Routes(props){
+   
+    return(
     <Router history={history} >
         <Switch>
-            <Route exact path="/login" component={IndexLogin} ></Route>
-            <Route exact path="/registrar" component={IndexRegistrar}></Route>
+            <Route exact path="/login" render={(p) => <IndexLogin {...props} />}  />
+            <Route exact user={props} path="/registrar" component={IndexRegistrar}></Route>
             <Route exact path="/view/:id" component={View} ></Route>
             <Route exact path="/"><Redirect to={{pathname: '/home'}} /></Route>
             <PrivateRoute exact path="/home" component={Home} > </PrivateRoute>
@@ -28,6 +30,9 @@ const Routes = () =>(
             <PrivateRoute component={NotFound} />
         </Switch>
     </Router>
-)
+    )
+}
 
 export default Routes;
+
+// render={(prop) => <IndexLogin {...props} />}

@@ -3,33 +3,29 @@ import './Login.css';
 import api from '../service';
 import { Alert } from 'react-bootstrap';
 import { Link, Redirect } from 'react-router-dom';
-import {history} from '../../shared/history/history'
 
-function Login() {
-
-    if(localStorage.getItem('token')){
-        history.push('/');
-    }
+function Login(props) {
     
     const [email, setEmail] = useState(''); 
     const [senha, setSenha] = useState('');
     const [erro, setErro] = useState('');
     const [show, setShow] = useState(false);
-    
+
     async function logar(e){
         e.preventDefault();
 
         try{
             
             const response = await (await api.post('/login',{email: email, password: senha }))
-
+            
             if(response.status === 200){
                 if(response.data.token)
                 {
                     localStorage.setItem('token',response.data.token);
-                    history.push('/');
-                    return;
+                    props.func(true);
                 }   
+            }else{
+                props.func(true);
             }
                 
                 

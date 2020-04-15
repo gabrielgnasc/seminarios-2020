@@ -13,6 +13,7 @@ class Home extends React.Component{
             user: null
         };
         this.getUser();
+       
     }
 
     getUser(){
@@ -43,7 +44,7 @@ class Home extends React.Component{
                             
                         </div>
                     </div>
-                    <div className="container" >
+                    <div className="container" style={{minHeight: '70vh'}} >
                         <div className="bg-row-at">
                             <HomeCard user={this.state.user}/> 
                         </div>

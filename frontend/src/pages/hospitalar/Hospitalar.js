@@ -3,6 +3,8 @@ import React from 'react';
 import api from '../service';
 import {history} from '../../shared/history/history';
 import {TextField} from '@material-ui/core';
+import uuid from './../../shared/gerarId';
+import Info from '../../components/InfoCriarQr/Info';
 
 class Hospitalar extends React.Component{
 
@@ -44,7 +46,7 @@ class Hospitalar extends React.Component{
         const headers = {'Authorization': 'Bearer ' + token}
         api.get('/token/' + token ,  { headers }).then((res) =>{
             this.user =res.data;
-            this.setState({typeId: btoa(this.user.email) + (this.user.type.length).toString()});
+            this.setState({typeId: btoa(this.user.email) + uuid()});
             if(this.id){
                 this.user.type.map((types) =>{
                     if(types.typeId === this.id){
@@ -66,11 +68,23 @@ class Hospitalar extends React.Component{
         e.preventDefault()
         
         let user = this.user;
-        var email = atob(this.id.split("=")[0])
-        if(email === this.user.email ){
-            const index = this.id.split("=")[this.id.split("=").length - 1]; 
-            user.type[index] = this.state;
+        var index;
+        if(this.id ){
+            var email = atob(this.id.split("=")[0])
+            if(email === this.user.email ){
+
+                user.type.map((types) => {
+                    if(types.typeId === this.id){
+                        index = user.type.indexOf(types);
+                    }
+                    return null;
+                });
+
+                user.type[index] = this.state;
+            }
+            alert('A URL parece não ser correta!')
         }else{
+
             user.type.push(this.state)
         }
 
@@ -87,6 +101,7 @@ class Hospitalar extends React.Component{
     render(){
         return(
             <div className="container" >
+                {Info('Hospitalar')}
                 <div className="home-bg m-bt left-to-right" >
                     <h2 style={{paddingLeft: 15, textAlign:"center"}} >Preencha os dados abaixo : </h2>
                     <form className="form-animal row" onSubmit={(e) => this.updateUser(e)}  >

@@ -5,18 +5,17 @@ import { MdHome } from "react-icons/md";
 import {FaUserAlt,FaDog, FaQrcode} from "react-icons/fa";
 import {MdChildFriendly, MdLocalHospital, MdExitToApp} from "react-icons/md";
 import logoW from '../../shared/images/logo-w.png';
-import {history} from '../../shared/history/history';
-import api from '../../pages/service'
+import api from '../../pages/service';
 
 class NavBar extends React.Component {
 
     constructor(props){
         super(props);
         if(!localStorage.getItem('token')){
-          //  history.push('/login');
         }
         this.user = null;
         this.getUser();
+       
     }
 
     getUser(){
@@ -27,7 +26,6 @@ class NavBar extends React.Component {
            
             if(res.data.error){
                 localStorage.removeItem('token')
-                //history.push('/login');
             }else{
                 this.setState({typeId: btoa(this.user.email) + (this.user.type.length).toString()})
             }
@@ -37,7 +35,7 @@ class NavBar extends React.Component {
 
     navegacao(){
         var qrMenu = "Criar QR";
-        if(localStorage.getItem('token')){
+        if(this.props.logado){
             return(
                 <div >
                     <Nav className="mr-auto">

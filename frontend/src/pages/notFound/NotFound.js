@@ -1,5 +1,14 @@
 import React from 'react';
+import './notFound.css'
 
-const NotFound = () => <h1>Not Found</h1>
+function NotFound(){
+    return(
+        <div className="container" >
+            <div className="center">
+                <h1>Not Found</h1>
+            </div>
+        </div>
+    );
+} 
 
 export default NotFound
