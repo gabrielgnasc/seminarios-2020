@@ -4,7 +4,7 @@
     border-radius: 5px ;
     margin-top: 25px;
     border: 1px solid #c2c2c2;
-    border-top: 5px solid #bb1688;
+    border-top: 1px solid transparent;
     box-shadow: -1px 3px 4px 4px rgba(0,0,0,.15)!important;
 }
 
@@ -98,6 +98,13 @@
     }
     .meu-card-body{
         text-align: start;
+    }
+}
+
+@media(max-width: 566px){
+    .meu-card-body {
+        grid-template-columns: 1fr 0fr;
+
     }
 }
 

@@ -5,37 +5,30 @@ import { MdHome } from "react-icons/md";
 import {FaUserAlt,FaDog, FaQrcode} from "react-icons/fa";
 import {MdChildFriendly, MdLocalHospital, MdExitToApp} from "react-icons/md";
 import logoW from '../../shared/images/logo-w.png';
-import api from '../../pages/service';
+import Configuracoes from '../../pages/configuracoes';
 
 class NavBar extends React.Component {
 
     constructor(props){
         super(props);
-        if(!localStorage.getItem('token')){
-        }
+
         this.user = null;
-        this.getUser();
-       
+
+        this.state = {
+            expanded: false
+        }
+      
     }
 
-    getUser(){
-        const token = localStorage.getItem('token');
-        const headers = {'Authorization': 'Bearer ' + token}
-        api.get('/token/' + token ,  { headers }).then((res) =>{
-            this.user =res.data;
-           
-            if(res.data.error){
-                localStorage.removeItem('token')
-            }else{
-                this.setState({typeId: btoa(this.user.email) + (this.user.type.length).toString()})
-            }
-            
-        })
-    }
+    handleClick = () => {
+        this.setState({expanded: !this.state.expanded});
+        console.log(this.state.expanded)
+    };
+
 
     navegacao(){
         var qrMenu = "Criar QR";
-        if(this.props.logado){
+        if(true){
             return(
                 <div >
                     <Nav className="mr-auto">
@@ -65,7 +58,7 @@ class NavBar extends React.Component {
                             </NavDropdown>
                         </div>
                         <div className="border-nav">
-                            <Nav.Link  >
+                            <Nav.Link onClick={this.handleClick} >
                                 <FaUserAlt className="icon-adjust" />
                                 Perfil
                                 {/* <FiChevronDown className="icon-adjust" style={{marginLeft: 5}} /> */}
@@ -74,13 +67,16 @@ class NavBar extends React.Component {
                         </div>
 
                         <div className="border-nav">
-                            <Nav.Link  href="/login" onClick={() => {localStorage.removeItem('token')}}>
+                            <Nav.Link  href="/login" onBlur={() => {localStorage.removeItem('token')}}>
                                 <MdExitToApp className="icon-adjust" />
                                 Sair 
                             </Nav.Link>
-                            
+
                         </div>
                     </Nav>
+                    <div className="config-div"  >
+                        { this.state.expanded && <Configuracoes></Configuracoes>}
+                    </div>
                 </div>
             );
         }

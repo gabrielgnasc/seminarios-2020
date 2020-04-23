@@ -2,35 +2,72 @@ import React from 'react';
 import Login from  './Login';
 import BarraLateral from '../../components/BarraLateral';
 import * as logo from  './../../shared/images/logo.png';
-import {history} from '../../shared/history/history'
+import api from '../service';
+import {history} from '../../shared/history/history';
+
 
 class IndexLogin extends React.Component {
 
-  
+  _isMounted = false;
   constructor(props){
     super(props);
 
     const widht = window.innerWidth;
      
     this.state = {
-      contemBarra: widht
+      contemBarra: widht,
     };
+  }
 
+  componentDidMount() {
+    this._isMounted = true;
     this.resize();
-
-    this.setStateLog = this.setStateLog.bind(this)
+    this.verificarLogado();
   }
 
   resize(){
-    window.addEventListener('resize',  ()=>{
-        this.setState({contemBarra: window.innerWidth});
-    });
+    if(this._isMounted){
+      window.addEventListener('resize',  ()=>{
+        if(this._isMounted){
+          this.setState({contemBarra: window.innerWidth});
+        }
+      });
+    }
+   
+  }
+
+  verificarLogado(){
+    
+    if(localStorage.getItem('token')){
+      const token = localStorage.getItem('token');
+
+      const verificarToken = async () => { 
+
+        try{
+          const headers = {'Authorization': 'Bearer ' + token};
+          const response =  await api.get('/token/' + token ,  { headers });
+          if(this._isMounted){
+            if(response.status=== 200){
+              history.push('/')
+            }
+          }
+
+        }catch(error){
+          localStorage.removeItem('token');
+        }
+
+      }
+
+      if(this._isMounted){
+        verificarToken();
+      }
+
+    }
   }
   
 
-  setStateLog(valor){
-    this.props.setLogado(valor);
-    history.push('/');
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   barraLateral(){
@@ -44,13 +81,14 @@ class IndexLogin extends React.Component {
         </div>
       )
     }
+
   }
 
   render(){
     return(
         <div className="App-header">
             {this.barraLateral()}
-            <Login func={this.setStateLog} ></Login>
+            <Login ></Login>
             <img src={logo} className="img-logo" alt="QR Id" ></img>
         </div>
     );

@@ -7,29 +7,54 @@ import {MdSettings} from 'react-icons/md';
 
 class Home extends React.Component{
 
+    _isMounted = false;
     constructor(props){
         super(props)
         this.state ={
             user: null
         };
-        this.getUser();
-       
+        
     }
 
-    getUser(){
-        const token = localStorage.getItem('token');
-        const headers = {'Authorization': 'Bearer ' + token}
-        api.get('/token/' + token ,  { headers }).then((res) =>{
-            this.setState({user: res.data});
-            if(res.data.error){
+
+    componentDidMount() {
+        this._isMounted = true;
+
+        if(this._isMounted && this.state.user === null){
+
+            
+            const token = localStorage.getItem('token');
+            const headers = {'Authorization': 'Bearer ' + token}
+            
+            try{
+                api.get('/token/' + token ,  { headers }).then((response)=>{
+                    if(this._isMounted){
+                        this.setState({user: response.data});
+                    }
+                
+                    if(this.state.user === null){
+                        history.push('/login');
+                    }
+
+                    
+                },(error) =>{
+                    history.push('/login');
+                });
+
+            }catch(error){
                 history.push('/login');
             }
-        })
+        }
+            
+    
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
 
     render(){
-       
         return(
             <>
                 {/* <NavBar state={this.state} callBack={this.pageReturn.bind(this)} ></NavBar> */}
