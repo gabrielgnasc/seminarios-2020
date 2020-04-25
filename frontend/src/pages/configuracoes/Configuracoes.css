@@ -11,7 +11,8 @@
 }
 
 .tela-in{
-    background-color: #EEE !important;
+    background-color: #FFF !important;
+    box-shadow: 0px 3px 7px 4px rgba(0,0,0,0.4) !important;
 }
 
 #seta{
@@ -20,7 +21,7 @@
     border-style: solid;
     border-width: 15px;
     border-color: transparent;
-    border-bottom-color: #EEE;
+    border-bottom-color: #FFF;
     position: relative;
     margin-top: -20px;
     left: 92%;

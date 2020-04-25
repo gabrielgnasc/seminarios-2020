@@ -2,13 +2,15 @@
 const User = require('../models/User');
 const Auth = require('../middlewares/auth');
 const bcrypt = require('bcrypt');
+// const fs = require('fs');
+// const pathModule = require('path');
 
 module.exports = {
 
     async index(req, res, next){
 
         await Auth.index(req,res,next);
-        
+
         const {user} = req.body
 
         var query = {'email': user.email};

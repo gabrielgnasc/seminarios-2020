@@ -10,6 +10,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
+    "b64-to-blob": "^1.2.19",
     "bootstrap": "^4.4.1",
     "history": "^4.10.1",
     "jquery": "^3.4.1",

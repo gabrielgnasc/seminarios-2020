@@ -12,14 +12,21 @@ body{
 }
 
 .perfil-img{
-    width: 80px;
-    border-radius: 50%;
     margin-right: 10px;
     justify-self: center;
     position: absolute;
     border-left-color: transparent;
     border-right-color: transparent;
 }
+
+.perfil-img img{
+    background-color: #aaa;
+    border-radius: 100%;
+    height: 100px;
+    object-fit: cover;
+    width: 100px;
+}
+
 .config-btn{
     justify-self: end;
     color: #fff!important;

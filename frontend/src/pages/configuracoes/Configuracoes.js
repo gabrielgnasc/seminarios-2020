@@ -1,6 +1,6 @@
 import React from 'react';
 import './Configuracoes.css';
-import {Card, CardContent, Typography, Button} from '@material-ui/core';
+import {Card, CardContent, Typography, Button, useRadioGroup} from '@material-ui/core';
 import {TextField} from '@material-ui/core';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -10,7 +10,7 @@ import api from '../service';
 
 class Configuracoes extends React.Component{
 
-   
+    montado = false;
     constructor(props){
         super(props);
 
@@ -21,11 +21,18 @@ class Configuracoes extends React.Component{
             senhaN: '',
             senhaC: '',
             expanded: 'painel1',
-            fotoPerfil: [],
+            fotoPerfil: null,
             user: null,
         }
 
         this.getUser();
+    }
+
+    componentDidMount() {
+        this.montado = true;
+    }
+    componentWillUnmount() {
+        this.montado = false;
     }
 
 
@@ -33,7 +40,12 @@ class Configuracoes extends React.Component{
         const token = localStorage.getItem('token');
         const headers = {'Authorization': 'Bearer ' + token}
         api.get('/token/' + token ,  { headers }).then((res) =>{
-            this.setState({user: res.data, nome: res.data.name, email: res.data.email})
+            if(this.montado){
+                this.setState({user: res.data, nome: res.data.name, email: res.data.email})
+                if(res.data.img !== null && res.data.img !== undefined){
+                    this.setState({fotoPerfil: res.data.img});
+                }
+            }
         })
     }
 
@@ -41,26 +53,32 @@ class Configuracoes extends React.Component{
         const token = localStorage.getItem('token');
         const headers = {'Authorization': 'Bearer ' + token}
         api.post(url,{user: dados} ,{ headers }).then((res) =>{
-            
+            window.location.reload();  
         },(error) => {
             alert(error)
         })
     }
 
     handleChange = (painel) => (event, isExpanded) => {
-        this.setState({expanded: isExpanded ? painel : false});
+        if(this.montado){
+            this.setState({expanded: isExpanded ? painel : false});
+        }
     };
 
     handleCapture = ({ target }) => {
         const fileReader = new FileReader();
-        const name = 'fotoPerfil';
 
         fileReader.readAsDataURL(target.files[0]);
         fileReader.onload = (e) => {
-            this.setState((prevState) => ({
-                [name]: [...prevState[name], e.target.result]
-            }));
+            if(this.montado){
+                this.setState({fotoPerfil:  e.target.result});
+                var user1 = this.state.user;
+                user1.img = this.state.fotoPerfil;
+                this.updateUser(user1, '/updateUser');
+            }
         };
+
+       
     };
 
     handleAlterPassword = () =>{
@@ -71,6 +89,7 @@ class Configuracoes extends React.Component{
                 email: this.state.user.email
             };
             this.updateUser( dados, '/updatePassword');
+           
         }
         else{
             alert('As senhas não coincidem!')
@@ -82,25 +101,25 @@ class Configuracoes extends React.Component{
         user.name = this.state.nome;
         user.email = this.state.email
         this.updateUser(user, '/updateUser');
+
     }
+
+
 
     render(){
      
         return(
             <>
                 <div id="seta" ></div>
-                <div className="row justify-content-center">
+                <div className="row justify-content-center" >
                     <div className="cardConfig"  style={{width: '100%'}}>  
                         <Card  className="tela-in">
                             <CardContent>
-                                <div>
-                                    <h4>Edite seu perfil</h4>
-                                </div>
-                                <hr></hr>
                                 <div className="row" >
                                     <div className="col-md-12" >
 
-                                        <ExpansionPanel expanded={this.state.expanded === 'painel1'} onChange={this.handleChange('painel1')}>
+                                        <ExpansionPanel expanded={this.state.expanded === 'painel1'} onChange={this.handleChange('painel1')} 
+                                        elevation={this.state.expanded === 'painel1'? 3 : 0} >
                                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="painel1" >
                                                 <Typography className="" >Configurações básicas</Typography>
                                             </ExpansionPanelSummary>
@@ -126,7 +145,8 @@ class Configuracoes extends React.Component{
                                             </ExpansionPanelDetails>
                                         </ExpansionPanel>
 
-                                        <ExpansionPanel expanded={this.state.expanded === 'painel2'} onChange={this.handleChange('painel2')}>
+                                        <ExpansionPanel expanded={this.state.expanded === 'painel2'} onChange={this.handleChange('painel2')} 
+                                        elevation={this.state.expanded === 'painel2'? 3 : 0}>
                                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="painel2" >
                                                 <Typography className="" >Alterar Senha</Typography>
                                             </ExpansionPanelSummary>
@@ -156,7 +176,8 @@ class Configuracoes extends React.Component{
                                             </ExpansionPanelDetails>
                                         </ExpansionPanel>
 
-                                        <ExpansionPanel expanded={this.state.expanded === 'painel3'} onChange={this.handleChange('painel3')}>
+                                        <ExpansionPanel expanded={this.state.expanded === 'painel3'} onChange={this.handleChange('painel3')} 
+                                        elevation={this.state.expanded === 'painel3'? 3 : 0}> 
                                             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="painel2" >
                                                 <Typography className="" >Alterar foto</Typography>
                                             </ExpansionPanelSummary>
@@ -164,7 +185,7 @@ class Configuracoes extends React.Component{
                                                 <form className="row div-img" >
 
                                                     <div className="circle" >
-                                                        <img src={this.state.fotoPerfil[0]} className="img-config"></img>
+                                                        <img src={this.state.fotoPerfil} className="img-config"></img>
                                                     </div>
 
                                                     <input accept="image/*" onChange={ this.handleCapture} style={{ display: 'none' }} id="raised-button-file" type="file" />

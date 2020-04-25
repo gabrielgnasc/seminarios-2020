@@ -9,6 +9,7 @@ import Configuracoes from '../../pages/configuracoes';
 
 class NavBar extends React.Component {
 
+    container = React.createRef();
     constructor(props){
         super(props);
 
@@ -22,15 +23,32 @@ class NavBar extends React.Component {
 
     handleClick = () => {
         this.setState({expanded: !this.state.expanded});
-        console.log(this.state.expanded)
     };
+
+    handleClickOutside = event => {
+        if (
+          this.container.current &&
+          !this.container.current.contains(event.target)
+        ) {
+          this.setState({
+            expanded: false
+          });
+        }
+      };
+
+    componentDidMount() {
+        document.addEventListener("mousedown", this.handleClickOutside);
+    }
+    componentWillUnmount() {
+        document.removeEventListener("mousedown", this.handleClickOutside);
+    }
 
 
     navegacao(){
         var qrMenu = "Criar QR";
         if(true){
             return(
-                <div >
+                <div ref={this.container}>
                     <Nav className="mr-auto">
                         <div className="border-nav" id="homeC" >
                             <Nav.Link href="/home"  >
