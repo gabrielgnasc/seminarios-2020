@@ -1,5 +1,5 @@
 .info-login-bg{
-    height: 95vh;
+    height: 100%;
     width: 500px;
     background-color: #292929;
     left: 0px;
@@ -11,10 +11,8 @@
 
   .info-login{
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr;
   }
 
   .text-logo{
@@ -28,24 +26,22 @@
     color: white;
     font-size: 24px;
     font-family: roboto;
-    margin: 30px;
-    margin-bottom: 100px;
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-end;
   }
 
   .text-info-w2{
     padding: 25px;
     color: white;
     font-family: roboto;
-    margin: 30px;
     display: flex;
     flex-wrap: wrap;
     font-size: 16px;
-    margin-top: 80px;
-    padding-top: 100px;
+    padding-top: 30px;
     margin-bottom: 0px;
     padding-bottom: 0px;
+    align-content: flex-end;
   }
 
 @media(max-width: 981px){

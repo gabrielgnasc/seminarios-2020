@@ -32,9 +32,9 @@ class Hospitalar extends React.Component{
             type: 'hospitalar'
         };
 
-        const {match} = this.props;
-        if(match !== undefined){
-            this.id = match.params.id;
+        const {computedMatch} = this.props;
+        if(computedMatch !== undefined){
+            this.id = computedMatch.params.id;
         }
 
         this.user = null;
@@ -46,7 +46,6 @@ class Hospitalar extends React.Component{
         const headers = {'Authorization': 'Bearer ' + token}
         api.get('/token/' + token ,  { headers }).then((res) =>{
             this.user =res.data;
-            this.setState({typeId: btoa(this.user.email) + uuid()});
             if(this.id){
                 this.user.type.map((types) =>{
                     if(types.typeId === this.id){
@@ -68,7 +67,9 @@ class Hospitalar extends React.Component{
         e.preventDefault()
         
         let user = this.user;
-        var index;
+       
+        var index ;
+        
         if(this.id ){
             var email = atob(this.id.split("=")[0])
             if(email === this.user.email ){
@@ -83,14 +84,15 @@ class Hospitalar extends React.Component{
                 user.type[index] = this.state;
             }
             alert('A URL parece não ser correta!')
-        }else{
 
+        }else{
+            
+            this.setState({typeId: btoa(this.user.email) + uuid()});
             user.type.push(this.state)
         }
 
         const token = localStorage.getItem('token');
         const headers = {'Authorization': 'Bearer ' + token}
-
         api.post('/updateUser',{user: user} ,{ headers }).then((res) =>{
             history.push('/');
         },(error) => {
@@ -100,10 +102,10 @@ class Hospitalar extends React.Component{
 
     render(){
         return(
-            <div className="container" >
-                {Info('Hospitalar')}
+            <div className="container" style={{ marginTop: 45}}>
+                
                 <div className="home-bg m-bt left-to-right" >
-                    <h2 style={{paddingLeft: 15, textAlign:"center"}} >Preencha os dados abaixo : </h2>
+                    {Info('Hospitalar')}
                     <form className="form-animal row" onSubmit={(e) => this.updateUser(e)}  >
                        
                         <div className="form-group col-md-8">

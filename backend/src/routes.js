@@ -21,8 +21,10 @@ routes.delete('/delete/:id', UserDelete.index);
 
 routes.post('/updateUser', UpdateUser.index);
 
+routes.post('/updatePassword', UpdateUser.updateSenha);
+
 routes.post('/createUser', CreateUser.index);
 
-routes.get('/token/:token', UserByToken.index);
+routes.get('/token/:token', UserByToken.index); 
  
 module.exports = routes ;

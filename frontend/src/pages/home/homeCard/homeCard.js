@@ -21,19 +21,6 @@ class HomeCard extends React.Component{
             user :  null,
             modal: false
         }; 
-
-        this.getUser();
-    }
-
-    getUser(){
-        const token = localStorage.getItem('token');
-        const headers = {'Authorization': 'Bearer ' + token}
-        api.get('/token/' + token ,  { headers }).then((res) =>{
-            this.setState({user: res.data});
-            if(res.data.error){
-                history.push('/login');
-            }
-        })
     }
 
     updateUser(){
@@ -48,6 +35,13 @@ class HomeCard extends React.Component{
         },(error) => {
             alert(error)
         })
+    }
+
+    componentDidUpdate(){
+        if(this.state.user === null){
+            this.setState({user: this.props.user})
+        }
+       
     }
 
     createCard(){
@@ -206,7 +200,9 @@ class HomeCard extends React.Component{
     };
 
 
+
     render(){
+
         return(
             <>
                 <div className="row">

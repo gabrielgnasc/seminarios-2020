@@ -8,8 +8,10 @@ var UserSchema = new mongoose.Schema({
         required: true,
         lowercase: true // removes whitespace accidentally
     },
-    avatar:{
-        type:Buffer,
+    img:{
+        
+        data:Buffer,
+        contentType: String,
         required: false,
     },
     name: {

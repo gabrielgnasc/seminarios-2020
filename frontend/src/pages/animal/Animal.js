@@ -29,11 +29,10 @@ class Animal extends React.Component{
         };
 
 
-        const {match} = this.props;
-        if(match !== undefined){
-            this.id = match.params.id;
+        const {computedMatch} = this.props;
+        if(computedMatch !== undefined){
+            this.id = computedMatch.params.id;
         }
-       
         this.user = null;
         this.getUser();
     }
@@ -43,7 +42,8 @@ class Animal extends React.Component{
         const headers = {'Authorization': 'Bearer ' + token}
         api.get('/token/' + token ,  { headers }).then((res) =>{
             this.user = res.data;
-            this.setState({typeId: btoa(this.user.email) + uuid()});
+            
+            
             if(this.id){
                 this.user.type.map((types) =>{
                     if(types.typeId === this.id){
@@ -84,7 +84,8 @@ class Animal extends React.Component{
             alert('A URL parece não ser correta!')
 
         }else{
-            
+
+            this.setState({typeId: btoa(this.user.email) + uuid()});
             user.type.push(this.state)
         }
 
@@ -100,10 +101,9 @@ class Animal extends React.Component{
     
     render(){
         return(
-            <div className="container">
-                {Info('Animais')}
+            <div className="container" style={{ marginTop: 45}}>  
                 <div className="home-bg m-bt left-to-right" >
-                    <h2 style={{paddingLeft: 15, textAlign:"center"}} >Preencha com os dados do seu animal: </h2>
+                    {Info('Animais')}
                     <form className="form-animal row" onSubmit={(e) => this.updateUser(e)} >
                         <div className="form-group col-md-7">
 

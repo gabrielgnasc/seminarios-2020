@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './Login.css';
 import api from '../service';
 import { Alert } from 'react-bootstrap';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import {history} from '../../shared/history/history';
 
 function Login(props) {
     
@@ -10,40 +11,59 @@ function Login(props) {
     const [senha, setSenha] = useState('');
     const [erro, setErro] = useState('');
     const [show, setShow] = useState(false);
+    const [logar, setLogar] = useState(false);
 
-    async function logar(e){
-        e.preventDefault();
+    console.log(logar)
+    useEffect(()=>{
+        let mounted = true;
 
-        try{
+        if(mounted && logar){
+            const a = async() => {
+                try{
             
-            const response = await (await api.post('/login',{email: email, password: senha }))
-            
-            if(response.status === 200){
-                if(response.data.token)
-                {
-                    localStorage.setItem('token',response.data.token);
-                    props.func(true);
-                }   
-            }else{
-                props.func(true);
+                    const response = await (await api.post('/login',{email: email, password: senha }))
+                    if(response.status === 200){
+                        if(response.data.token && mounted)
+                        {
+                            localStorage.setItem('token',response.data.token);
+                            setLogar(false)
+                            history.push('/')
+                        }   
+                    }else{
+                        if(response.data.token && mounted){
+                            setLogar(false)
+                        }
+                            
+                    }
+                        
+                }catch (error){
+                    if(localStorage.getItem('token'))
+                        localStorage.removeItem('token')
+                    if( mounted ){
+                        console.log(error)
+                        setErro('Usuário ou senha inválidos');
+                        setShow(true)
+                        setLogar(false)
+                    }  
+                }
             }
-                
-                
-        }catch (error){
-            if(localStorage.getItem('token'))
-                localStorage.removeItem('token')
-            setErro('Usuário ou senha inválidos');
-            setShow(true);
+            a();
         }
-    }
+    
+        return () => mounted = false;
 
-    function isLogged(){
-        if(localStorage.getItem('token')){
-            return(
-                <Redirect to={{ pathname: '/login'}} />
-            )
-        }
-    }
+    }, [logar, email, props , senha])
+
+
+    
+
+    // function isLogged(){
+    //     if(localStorage.getItem('token')){
+    //         return(
+    //             <Redirect to={{ pathname: '/'}} />
+    //         )
+    //     }{isLogged()}
+    // }
 
     function AlertDismissibleExample() {
         if (show) {
@@ -55,14 +75,16 @@ function Login(props) {
         }
     }
 
+
+
     return (
         <div className="center-position">
-            {isLogged()}
+        
             <div className="tam-max">
                 <h3 >Login</h3>
                 <hr></hr>
                 {AlertDismissibleExample()}
-                <form onSubmit={logar} >
+                <form >
                     <div className="form-group">
                         <input type="email" value={email} onChange={ e => setEmail(e.target.value)} className="input-login" placeholder="E-mail" aria-describedby="emailHelp" required/>
                         <small id="emailHelp" className="form-text text-muted">Digite seu email de login</small>
@@ -70,7 +92,7 @@ function Login(props) {
                     <div className="form-group">
                         <input type="password" value={senha} onChange={ e => setSenha(e.target.value)} className="input-login" placeholder="Senha" required />
                     </div>
-                    <button type="submit" className="btn btn-primary bg-roxo btn-ancora">Entrar</button>
+                    <button type="button" onClick={() => setLogar(true) } className="btn btn-primary bg-roxo btn-ancora">Entrar</button>
                     <div className="row">
                         <Link to="/registrar" className="btn-ancora"  >Registrar uma conta</Link>
                     </div>
