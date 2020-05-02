@@ -1,20 +1,29 @@
-//const Dev = require('../models/Dev');
+
 const User = require('../models/User');
 const Auth = require('../middlewares/auth');
 const bcrypt = require('bcrypt');
-// const fs = require('fs');
-// const pathModule = require('path');
+const path = require('path');
+const fs = require('fs');
+const {promisify} = require('util');
 
 module.exports = {
 
     async index(req, res, next){
 
-        await Auth.index(req,res,next);
+        //await Auth.index(req,res,next);
+
 
         const {user} = req.body
+        var query = {'email': user.email};  
 
-        var query = {'email': user.email};
-        // insert into mongo with Schema's create method from mongoose
+        const {oldFile} = user.file;
+        
+        if(oldFile !== null && oldFile !== '' && oldFile !== undefined){
+            const fileName = oldFile.replace('http://localhost:3333/files/', '')
+            console.log(fileName);
+            promisify(fs.unlink)(path.resolve(__dirname, '..', '..', 'uploads', fileName));
+        }
+        
         var updateUser = await User.findOneAndUpdate(query, user, {returnNewDocument: true}, function(error, user) {
             if (error)  {
                 return res.json({error});
@@ -39,7 +48,6 @@ module.exports = {
 
         user = await User.findOne({email: userReq.email}).select('+password');
 
-             
         if (!user)  {
             return res.status(400).json({error: "Senha inválido"});
         }

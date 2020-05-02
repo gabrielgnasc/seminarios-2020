@@ -1,0 +1,48 @@
+.inputForm{
+    border-color: rgba(0, 0, 0, 0.23);
+    border-radius: 5px;
+    width: 100%;
+}
+
+.MuiFormLabel-root.Mui-focused{
+    color: #292929 !important;
+}
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline{
+    border-color:  #292929!important;
+}
+
+.inputForm:focus{
+    border: 2px solid #292929;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.inputForm:focus{
+    border: 2px solid #292929;
+    border-radius: 5px;
+    width: 100%;
+    outline: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 0 0.01rem #29292900;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff!important;
+    text-decoration: none;
+    background-color: #bb1688;
+    padding: 15px;
+}
+.dropdown-item, .dropdown-item {
+    padding: 15px;
+}
+.dropdown-item:hover {
+    padding: 15px;
+    background-color: #bb168844;
+}
+
+.navbar-nav .dropdown-menu {
+   padding: 0px;
+   border-radius: 0px;
+}
+
+

@@ -1,0 +1,74 @@
+body{
+    background-color: #292929 !important;
+    overflow-x: hidden;
+}
+.card-top-n{
+    position: relative;
+    background-color: #bb1688;
+    border-radius: 27px;
+    padding: 5px 25px;
+    color: #FFF;
+    font-weight: 400;
+}
+
+.perfil-img{
+    margin-right: 10px;
+    justify-self: center;
+    position: absolute;
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+
+.perfil-img img{
+    background-color: #aaa;
+    border-radius: 100%;
+    height: 100px;
+    object-fit: cover;
+    width: 100px;
+}
+
+.config-btn{
+    justify-self: end;
+    color: #fff!important;
+}
+.config-btn:hover{
+    justify-self: end;
+    color: #fff!important;
+}
+.left-to-right{
+    animation-name: ani1;
+    animation-duration: 1s;
+}
+@keyframes ani1 {
+    from {transform: translateX(100vw)}
+    50%{transform: translateX(-10px)}
+    52%{transform: translateX(-9px)}
+    54%{transform: translateX(-8px)}
+    55%{transform: translateX(-7px)}
+    56%{transform: translateX(-6px)}
+    57%{transform: translateX(-5px)}
+    58%{transform: translateX(-4px)}
+    59%{transform: translateX(-3px)}
+    60%{transform: translateX(-2px)}
+    61%{transform: translateX(-1px)}
+    62%{transform: translateX(0px)}
+    to {transform: translateX(0px)}
+  }
+
+.teste{
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    box-shadow: 2px 3px 4px 3px rgba(0,0,0,.15)!important;
+}
+
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    border-color: #C2c2c2 #C2c2c2 #FFF!important;
+}
+
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    color: #292929;
+    background-color: #fff;
+    border-color: #C2c2c2 #C2c2c2 #fff;
+}

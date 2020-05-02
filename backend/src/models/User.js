@@ -8,11 +8,11 @@ var UserSchema = new mongoose.Schema({
         required: true,
         lowercase: true // removes whitespace accidentally
     },
-    img:{
-        
-        data:Buffer,
-        contentType: String,
-        required: false,
+    file:{
+        name: String,
+        size: Number,
+        key: String,
+        url: String,
     },
     name: {
         type: String,
@@ -27,7 +27,6 @@ var UserSchema = new mongoose.Schema({
         type:Date,
         default: Date.now,
     },
-    role: String,
     type: []
 });
 
