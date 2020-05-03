@@ -14,8 +14,8 @@ function Info(name){
                         {name}
                     </h2>
                 </div>
-                <div style={{padding: 50, paddingTop: 70, paddingBottom: 20}}>
-                    <h3>Preencha os dados do formulário abaixo com as informações corretas e coerentes, os campos com * são obrigatórios</h3>
+                <div className="div-texto-info" >
+                    <p className=" h3 texto-info-name " >Preencha os dados do formulário abaixo com as informações corretas e coerentes, os campos com * são obrigatórios</p>
                 </div>
  
             </div>

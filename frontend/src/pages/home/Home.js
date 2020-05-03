@@ -19,13 +19,13 @@ class Home extends React.Component{
             user: null,
             expanded: false
         };
-        console.log(props)
         this.dispatch = props.dispatch;
     }
 
 
     componentDidMount() {
         this._isMounted = true;
+        this.dispatch(toggleStateUser(this.state.user, true));
 
         document.addEventListener("mousedown", this.handleClickOutside);
 
@@ -41,12 +41,9 @@ class Home extends React.Component{
                         this.setState({user: response.data});
                         this.dispatch(toggleStateUser(this.state.user, true));
                     }
-                
                     if(this.state.user === null){
                         history.push('/login');
                     }
-
-                    
                 },(error) =>{
                     history.push('/login');
                 });
@@ -86,24 +83,24 @@ class Home extends React.Component{
             <>
                 {/* <NavBar state={this.state} callBack={this.pageReturn.bind(this)} ></NavBar> */}
                 <div className="container-fuid" style={{paddingTop: 60}} >
-                    <div className="container" ref={this.container}>
-                        <div className="card-top-n teste" >
+                    <div className="container" >
+                        <div className="card-top-n teste" ref={this.container}>
                             <label style={{marginBottom: 0}} >
                                 { (this.state.user !== null) ? this.state.user.name : "   " }
                             </label>
                             <div className="perfil-img" >
                                 <img className="img-config" src={this.state?.user?.file === null ? null : this.state?.user?.file?.url}  />
                             </div>
-                            <button className="close config-btn" onClick={this.handleClick} ><MdSettings/></button>
-                            
+                            <button className="close config-btn"  onClick={this.handleClick} ><MdSettings/></button>
+                            <div className="config-div cdh"  >
+                                { this.state.expanded && <Configuracoes></Configuracoes>}
+                            </div>
                         </div>
-                        <div className="config-div" style={{right:"21.5%"}} >
-                            { this.state.expanded && <Configuracoes></Configuracoes>}
-                        </div>
+                        
                     </div>
-                    <div className="container" style={{minHeight: '70vh'}} >
+                    <div className="container" style={{minHeight: '65vh'}} >
                         <div className="bg-row-at">
-                            <HomeCard user={this.state.user}/> 
+                            <HomeCard /> 
                         </div>
                     </div>
                 </div>

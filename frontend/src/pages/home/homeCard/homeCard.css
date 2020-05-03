@@ -86,8 +86,8 @@
 
 @media(max-width: 991.5px){
     .qr-code{
-        width: 100px !important;
-        height: 100px !important;
+        width: 150px !important;
+        height: 150px !important;
     }
     
     .meu-card{
@@ -104,7 +104,8 @@
 @media(max-width: 566px){
     .meu-card-body {
         grid-template-columns: 1fr 0fr;
-
+        text-align: center;
+        gap: 15px;
     }
 }
 

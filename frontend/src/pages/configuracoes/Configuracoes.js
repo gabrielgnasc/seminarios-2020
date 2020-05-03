@@ -164,17 +164,17 @@ class Configuracoes extends React.Component{
                                                 <form className="row" >
 
                                                     <div className="form-group col-md-12">
-                                                        <TextField type="text" className="inputForm"  label="Senha antiga"  
+                                                        <TextField type="password" className="inputForm"  label="Senha antiga"  
                                                         onChange={ (e) => this.setState({senhaA: e.target.value})} />
                                                     </div>
 
                                                     <div className="form-group col-md-12">
-                                                        <TextField type="email" className="inputForm" label="Nova Senha"  
+                                                        <TextField type="password" className="inputForm" label="Nova Senha"  
                                                         onChange={ (e) => this.setState({senhaN: e.target.value})} />
                                                     </div>
 
                                                     <div className="form-group col-md-12">
-                                                        <TextField type="email" className="inputForm" label="Confirmar Senha"  
+                                                        <TextField type="password" className="inputForm" label="Confirmar Senha"  
                                                         onChange={ (e) => this.setState({senhaC: e.target.value})} />
                                                     </div>
 
