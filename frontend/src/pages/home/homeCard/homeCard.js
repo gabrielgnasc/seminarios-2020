@@ -11,6 +11,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import { connect } from 'react-redux';
 
 
 class HomeCard extends React.Component{
@@ -38,7 +39,7 @@ class HomeCard extends React.Component{
     }
 
     componentDidUpdate(){
-        if(this.state.user === null){
+        if(this.state.user === null && this.props.user !== null){
             this.setState({user: this.props.user})
         }
     }
@@ -47,7 +48,7 @@ class HomeCard extends React.Component{
         let card = []
         for (let i = 0; i < this.state?.user?.type?.length ; i++) {
 
-            var url = "http://192.168.0.29:3000/view/" + this.state?.user.type[i].typeId; 
+            var url = "http://localhost:3000/view/" + this.state?.user.type[i].typeId; 
 
             card.push(
                 <div className="col-md-6" key={this.state?.user.type[i].typeId}> 
@@ -188,8 +189,8 @@ class HomeCard extends React.Component{
     downloadQR(id, nome){
         const canvas = document.getElementById(id);
         const pngUrl = canvas
-          .toDataURL("image/png")
-          .replace("image/png", "image/octet-stream");
+            .toDataURL("image/png")
+            .replace("image/png", "image/octet-stream");
         let downloadLink = document.createElement("a");
         downloadLink.href = pngUrl;
         downloadLink.download = "QR-"+ nome.trim().replace(" ", "_") + ".png";
@@ -201,20 +202,14 @@ class HomeCard extends React.Component{
 
 
     render(){
-
         return(
             <>
                 <div className="row">
-                   
                     {this.createCard()}
-                   
                 </div>
-               
-                
-             
             </>
         );
     }
 }
 
-export default HomeCard;
+export default connect(state => ({user: state.user}))(HomeCard);

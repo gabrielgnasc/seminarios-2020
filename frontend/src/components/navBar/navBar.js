@@ -7,7 +7,6 @@ import {MdChildFriendly, MdLocalHospital, MdExitToApp} from "react-icons/md";
 import logoW from '../../shared/images/logo-w.png';
 import Configuracoes from '../../pages/configuracoes';
 import { connect } from 'react-redux';
-import toggleStateUser from '../../store/actions';
 
 class NavBar extends React.Component {
 
@@ -95,7 +94,7 @@ class NavBar extends React.Component {
 
                         </div>
                     </Nav>
-                    <div className="config-div"  >
+                    <div className="config-div" style={{marginLeft: '-35px'}}>
                         { this.state.expanded && <Configuracoes></Configuracoes>}
                     </div>
                 </div>
@@ -113,7 +112,7 @@ class NavBar extends React.Component {
                 { this.props.isLogged &&
                     <Navbar bg="light" expand="lg" className="nav-color">
                         <Navbar.Brand href="/home">
-                            <img src={logoW} style={{width: 40, marginLeft:25}} alt="Logo img" ></img>QR Id
+                            <img src={logoW} style={{width: 40, marginLeft:25}} alt="Logo img" ></img>QR Card
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav" style={{flexFlow: 'row-reverse'}}>

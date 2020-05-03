@@ -8,7 +8,7 @@ function App() {
         <Provider store={store}>
             
             <Routes ></Routes> 
-            <p style={{textAlign: 'center', marginTop:30,color:'#FFF' }}> QR Id © 2020. Todos os direitos reservados</p>
+            <p style={{textAlign: 'center', marginTop:30,color:'#FFF' }}> QR Card © 2020. Todos os direitos reservados</p>
         </Provider>
     )  
 } 

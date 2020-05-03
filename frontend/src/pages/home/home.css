@@ -72,3 +72,38 @@ body{
     background-color: #fff;
     border-color: #C2c2c2 #C2c2c2 #fff;
 }
+
+.config-div{
+    position: absolute;
+    max-width: 360px;
+    z-index: 10;
+    margin: 5px;
+    margin-top: -5px;
+}
+
+.cdh{
+    top:60px;
+    right: 8px;
+}
+
+
+
+@media(max-width: 560px){
+    .config-div {
+        position: absolute;
+        max-width: calc(100vw - 50px);
+        z-index: 10;
+        margin: 5px;
+        margin-top: -5px;
+        right: 20px;
+    }
+
+    #seta {
+        visibility: hidden !important;
+    }
+
+    .cdh{
+        top:60px;
+        right: 6px !important;
+    }
+}

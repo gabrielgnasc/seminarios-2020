@@ -4,7 +4,10 @@ import BarraLateral from '../../components/BarraLateral';
 import * as logo from  './../../shared/images/logo.png';
 import api from '../service';
 import {history} from '../../shared/history/history';
-
+import { connect } from 'react-redux';
+import {toggleStateUser} from '../../store/actions';
+import {Navbar} from 'react-bootstrap';
+import logoW from '../../shared/images/logo-w.png';
 
 
 class IndexLogin extends React.Component {
@@ -25,6 +28,7 @@ class IndexLogin extends React.Component {
     this._isMounted = true;
     this.resize();
     this.verificarLogado();
+    this.props.dispatch(toggleStateUser(null,false))
   }
 
   resize(){
@@ -68,10 +72,26 @@ class IndexLogin extends React.Component {
       )
     }else if(this.state.contemBarra < 865) {
       return(
-        <div style={{height:40}}>
+        <div style={{width: '100%'}}>
+           {this.nav()}
         </div>
       )
     }
+
+  }
+
+  nav(){    
+    return(
+        <Navbar bg="light" expand="lg" className="nav-color" >
+            <Navbar.Brand href="/home">
+                <img src={logoW} style={{width: 40, marginLeft:25}} alt="Logo img" ></img>QR Card
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav" style={{flexFlow: 'row-reverse'}}>
+            
+            </Navbar.Collapse>
+        </Navbar>  
+    );
 
   }
 
@@ -86,4 +106,4 @@ class IndexLogin extends React.Component {
   }
 }
 
-export default IndexLogin ;
+export default connect(state => ({isLogged: state.isLogged}))(IndexLogin) ;

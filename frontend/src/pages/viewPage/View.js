@@ -16,7 +16,8 @@ import logoW from '../../shared/images/logo-w.png';
             const {match} = this.props;
             this.id = match.params.id;
 
-            this.getUser();     
+            this.getUser();  
+            
         }
     
         getUser(){
@@ -67,21 +68,19 @@ import logoW from '../../shared/images/logo-w.png';
         }
     
        nav(){
-            if(!localStorage.getItem('token')){
-                return(
-                    <Navbar bg="light" expand="lg" className="nav-color">
-                        <Navbar.Brand href="/home">
-                            <img src={logoW} style={{width: 40, marginLeft:25}} alt="Logo img" ></img>QR Id
-                        </Navbar.Brand>
-                        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                        <Navbar.Collapse id="responsive-navbar-nav" style={{flexFlow: 'row-reverse'}}>
-                        
-                        </Navbar.Collapse>
-                    </Navbar>  
-                );
-            }else{
-                return( <></>)
-            }
+            
+            return(
+                <Navbar bg="light" expand="lg" className="nav-color">
+                    <Navbar.Brand href="/home">
+                        <img src={logoW} style={{width: 40, marginLeft:25}} alt="Logo img" ></img>QR Id
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav" style={{flexFlow: 'row-reverse'}}>
+                    
+                    </Navbar.Collapse>
+                </Navbar>  
+            );
+            
        }
     
         render(){

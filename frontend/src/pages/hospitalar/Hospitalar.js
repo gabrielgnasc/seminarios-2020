@@ -5,10 +5,12 @@ import {history} from '../../shared/history/history';
 import {TextField} from '@material-ui/core';
 import uuid from './../../shared/gerarId';
 import Info from '../../components/InfoCriarQr/Info';
+import { connect } from 'react-redux';
+import {toggleStateUser} from '../../store/actions';
 
 class Hospitalar extends React.Component{
 
-    constructor(props){
+    constructor(props, {user}){
         super(props) 
         this.state = {
             nome: '',
@@ -37,6 +39,7 @@ class Hospitalar extends React.Component{
             this.id = computedMatch.params.id;
         }
 
+        props.dispatch(toggleStateUser(null,true));
         this.user = null;
         this.getUser();
     }
@@ -262,4 +265,4 @@ class Hospitalar extends React.Component{
     }
 }
 
-export default Hospitalar;
+export default connect(state => ({user: state.user}))(Hospitalar);

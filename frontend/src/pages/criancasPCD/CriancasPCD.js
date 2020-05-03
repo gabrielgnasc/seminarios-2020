@@ -5,6 +5,8 @@ import {history} from '../../shared/history/history';
 import {TextField} from '@material-ui/core';
 import uuid from './../../shared/gerarId';
 import Info from '../../components/InfoCriarQr/Info';
+import { connect } from 'react-redux';
+import {toggleStateUser} from '../../store/actions';
 
 class CriancasPCD extends React.Component{
 
@@ -35,6 +37,7 @@ class CriancasPCD extends React.Component{
         if(computedMatch !== undefined){
             this.id = computedMatch.params.id;
         }
+        props.dispatch(toggleStateUser(null,true));
     }
 
     getUser(){
@@ -235,4 +238,4 @@ class CriancasPCD extends React.Component{
     }
 }
 
-export default CriancasPCD;
+export default connect()(CriancasPCD);

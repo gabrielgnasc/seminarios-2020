@@ -153,7 +153,7 @@ a.btn-ancora:hover {
   }
   .App-header {
     flex-direction: column;
-    height: calc(100vh - 140px);
+    height: calc(100vh - 80px);
   }
   .img-logo {
     width: 0px;
