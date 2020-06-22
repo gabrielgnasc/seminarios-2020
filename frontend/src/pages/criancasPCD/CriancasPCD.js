@@ -1,14 +1,13 @@
 import './CriancasPCD.css';
-import React from 'react';
-import api from '../service'
-import {history} from '../../shared/history/history';
+import React,{Component} from 'react';
 import {TextField} from '@material-ui/core';
-import uuid from './../../shared/gerarId';
 import Info from '../../components/InfoCriarQr/Info';
 import { connect } from 'react-redux';
 import {toggleStateUser} from '../../store/actions';
+import serviceGetUser from '../serviceGetUser';
+import serviceUpdateUser from '../serviceUpdateUser';
 
-class CriancasPCD extends React.Component{
+class CriancasPCD extends Component{
 
     constructor(props){
         super(props) 
@@ -31,80 +30,34 @@ class CriancasPCD extends React.Component{
             type: 'crianças e especiais'
         };
         this.user = null;
-        this.getUser();
+        
 
         const {computedMatch} = this.props;
         if(computedMatch !== undefined){
             this.id = computedMatch.params.id;
         }
         props.dispatch(toggleStateUser(null,true));
+        this.getUser();
     }
 
     getUser(){
-        const token = localStorage.getItem('token');
-        const headers = {'Authorization': 'Bearer ' + token}
-        api.get('/token/' + token ,  { headers }).then((res) =>{
-            this.user =res.data;
-            if(this.id){
-                this.user.type.map((types) =>{
-                    if(types.typeId === this.id){
-                        this.setState(state =>{
-                            return types;               
-                        });
-                    }
-                    return null;
-                });
-            }
-            if(res.data.error){
-                history.push('/login');
-            }
-
-        })
+        serviceGetUser(this.id, this.setState)
+            .then(res => {
+                this.user = res.user;
+                this.setState(state => {return res.typesUser })
+            }); 
     }
 
     async updateUser(e){
-        e.preventDefault()
-        
-        let user = this.user;
-       
-        var index ;
-
-        var ids = [];
-        user.type.map((t) => {
-            ids.push(t.typeId);
-        })
-        
-        if(ids.includes(this.id)){
-            user.type.map((types) => {
-                if(types.typeId === this.id){
-                    index = user.type.indexOf(types);
-                }
-                return null;
-            });
-
-            user.type[index] = this.state;
-
-        }else{
-            await this.setState({typeId: btoa(this.user.email) + uuid()});
-            user.type.push(this.state)
-        }
-
-        const token = localStorage.getItem('token');
-        const headers = {'Authorization': 'Bearer ' + token}
-        api.post('/updateUser',{user: user} ,{ headers }).then((res) =>{
-            history.push('/');
-        },(error) => {
-            alert(error)
-        })
+        serviceUpdateUser(e, this.user, this.id, this.state);
     }
 
-
-
     render(){
+        console.log(this.state)
         return(
             <div className="container" style={{ marginTop: 45}}>  
                 <div className="home-bg m-bt left-to-right" >
-                    {Info('Crianças e Especiais')}
+                    <Info name="Crianças e Especiais"/>
                     <form className="form-animal row" onSubmit={(e) => this.updateUser(e)}  >
                         <div className="form-group col-md-8">
 

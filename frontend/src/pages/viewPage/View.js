@@ -1,49 +1,49 @@
-import React from 'react';
+import React,{Component} from 'react';
 import './View.css';
 import api from '../service';
 import {Navbar} from 'react-bootstrap';
 import logoW from '../../shared/images/logo-w.png';
 
 
- class View extends React.Component{
+ class View extends Component{
 
-        constructor(props){
-            super(props) 
-            this.state = {
-                type: null
-            };
-      
-            const {match} = this.props;
-            this.id = match.params.id;
-
-            this.getUser();  
-            
-        }
+    constructor(props){
+        super(props) 
+        this.state = {
+            type: null
+        };
     
-        getUser(){
-            const headers = {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json; charset=utf-8'
-            }
-            try{
-                api.get('/userType/' + this.id, {headers }).then((res) =>{
-                    this.setState({type: res.data})
-                    if(res.data.length === 0 ){
-                        this.setState({type: {erro: 'Este código não possui nenhum dado'}});
-                    }
-                })
+        const {match} = this.props;
+        this.id = match.params.id;
 
-            }catch(error){
-                alert(error.message)
-            }
-            
+        this.getUser();  
+        
+    }
+
+    getUser(){
+        const headers = {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json; charset=utf-8'
         }
+        try{
+            api.get('/userType/' + this.id, {headers }).then((res) =>{
+                this.setState({type: res.data})
+                if(res.data.length === 0 ){
+                    this.setState({type: {erro: 'Este código não possui nenhum dado'}});
+                }
+            })
 
-        gerarPagina(){
-            const dados = this.state.type;
-            var labels = [];
+        }catch(error){
+            alert(error.message)
+        }
+        
+    }
 
-            if(dados !== null){
+    generateView(){
+        const dados = this.state.type;
+        var labels = [];
+
+        if(dados !== null){
             Object.keys(dados).forEach(function(item){
                 if(dados[item]){
                     
@@ -61,47 +61,47 @@ import logoW from '../../shared/images/logo-w.png';
                     );
                 }
             });
-            }
+        }
 
 
-            return ( <div className="row"> {labels} </div>)
-        }
-    
-       nav(){
-            
-            return(
-                <Navbar bg="light" expand="lg" className="nav-color">
-                    <Navbar.Brand href="/home">
-                        <img src={logoW} style={{width: 40, marginLeft:25}} alt="Logo img" ></img>QR Id
-                    </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                    <Navbar.Collapse id="responsive-navbar-nav" style={{flexFlow: 'row-reverse'}}>
-                    
-                    </Navbar.Collapse>
-                </Navbar>  
-            );
-            
-       }
-    
-        render(){
-            
-            return(
-                <>
-                    {this.nav()}
-                    <div className="container">
-                        <div className="card shadow" style={{marginTop:35}}>
-                            <div className="card-header">
-                                <h2>Informações do Código lido</h2>
-                            </div>
-                            <div className="card-body" style={{padding:25}}>
-                            {this.gerarPagina()}       
-                            </div>
-                        </div>
-                        
-                    </div>
-                </>
-            );
-        }
+        return ( <div className="row"> {labels} </div>)
     }
     
-    export default View;
+    nav(){
+            
+        return(
+            <Navbar bg="light" expand="lg" className="nav-color">
+                <Navbar.Brand href="/home">
+                    <img src={logoW} style={{width: 40, marginLeft:25}} alt="Logo img" ></img>QR Id
+                </Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav" style={{flexFlow: 'row-reverse'}}>
+                
+                </Navbar.Collapse>
+            </Navbar>  
+        );
+            
+    }
+    
+    render(){
+        
+        return(
+            <>
+                {this.nav()}
+                <div className="container">
+                    <div className="card shadow" style={{marginTop:35}}>
+                        <div className="card-header">
+                            <h2>Informações do Código lido</h2>
+                        </div>
+                        <div className="card-body" style={{padding:25}}>
+                        {this.generateView()}       
+                        </div>
+                    </div>
+                    
+                </div>
+            </>
+        );
+    }
+}
+
+export default View;

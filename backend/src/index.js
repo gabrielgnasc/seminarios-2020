@@ -9,7 +9,7 @@ const morgan = require('morgan')
 const app = express();
 
 async function  connect(){
-    await mongoose.connect('mongodb+srv://seminariosPUC:t86c2Rs6TC09AAgX@cluster0-bs4ii.mongodb.net/test?retryWrites=true&w=majority', {
+    await mongoose.connect('mongodb://localhost:27017/qrcard', {
         useNewUrlParser: true,
         useUnifiedTopology: true,
     });
@@ -21,8 +21,6 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
 app.use(cors({origin: '*'}));
-
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
