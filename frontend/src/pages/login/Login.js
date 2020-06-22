@@ -1,95 +1,110 @@
-import React, {useState, useEffect} from 'react';
-import './Login.css';
+import React,{Component} from 'react';
+import LoginComponent from  './loginComponent/LoginComponent';
+import BarraLateral from '../../components/barraLateral/barraLateral';
+import * as logo from  './../../shared/images/logo.png';
 import api from '../service';
-import { Alert } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import {history} from '../../shared/history/history';
+import { connect } from 'react-redux';
+import {toggleStateUser} from '../../store/actions';
+import {Navbar} from 'react-bootstrap';
+import logoW from '../../shared/images/logo-w.png';
 
-function Login(props) {
+
+class Login extends Component {
+
+  _isMounted = false;
+
+  constructor(props){
+    super(props);
+
+    const widht = window.innerWidth;
     
-    const [email, setEmail] = useState(''); 
-    const [senha, setSenha] = useState('');
-    const [erro, setErro] = useState('');
-    const [show, setShow] = useState(false);
-    const [logar, setLogar] = useState(false);
+    this.state = {
+      containsBar: widht,
+    };
+  }
 
+  componentDidMount() {
+    this._isMounted = true;
+    this.resize();
+    this.checkLogIn();
+    this.props.dispatch(toggleStateUser(null,false))
+  }
 
-    useEffect(()=>{
-        let mounted = true;
-
-        if(mounted && logar){
-            const a = async() => {
-                try{
-            
-                    const response = await (await api.post('/login',{email: email, password: senha }))
-                    if(response.status === 200){
-                        if(response.data.token && mounted)
-                        {
-                            localStorage.setItem('token',response.data.token);
-                            setLogar(false);
-                            history.push('/')
-                        }   
-                    }else{
-                        if(response.data.token && mounted){
-                            setLogar(false)
-                        }
-                            
-                    }
-                        
-                }catch (error){
-                    if(localStorage.getItem('token'))
-                        localStorage.removeItem('token')
-                    if( mounted ){
-                        console.log(error)
-                        setErro('Usuário ou senha inválidos');
-                        setShow(true)
-                        setLogar(false)
-                    }  
-                }
-            }
-            a();
+  resize(){
+    if(this._isMounted){
+      window.addEventListener('resize',  ()=>{
+        if(this._isMounted){
+          this.setState({containsBar: window.innerWidth});
         }
+      });
+    }
+  }
+
+  async checkLogIn(){
+
+    if (localStorage.getItem('token')){
+      try{
+        const headers = {'Authorization': 'Bearer ' + localStorage.getItem('token')};
+        const response =  await api.get('/token/' + localStorage.getItem('token') ,  { headers });
+        if (response.status === 200){
+          history.push('/');
+        }
+        if (response.status === 400){
+          localStorage.removeItem('token');
+        }
+      } catch(error){
+        localStorage.removeItem('token');
+      }
+    }
     
-        return () => mounted = false;
+  }
+  
 
-    }, [logar, email, senha])
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
 
-
-
-    function AlertDismissibleExample() {
-        if (show) {
-            return (
-                <Alert variant="danger" className="text-center" onClose={() => setShow(false)} dismissible>
-                <p>{erro}</p>
-                </Alert>
-            );
-        }
+  barraLateral(){
+    if(this.state.containsBar > 981){
+      return(
+        <BarraLateral></BarraLateral>
+      )
+    }else if(this.state.containsBar < 865) {
+      return(
+        <div style={{width: '100%'}}>
+          {this.nav()}
+        </div>
+      )
     }
 
+  }
 
-    return (
-        <div className="center-position">
-        
-            <div className="tam-max">
-                <h3 >Login</h3>
-                <hr></hr>
-                {AlertDismissibleExample()}
-                <form >
-                    <div className="form-group">
-                        <input type="email" value={email} onChange={ e => setEmail(e.target.value)} className="input-login" placeholder="E-mail" aria-describedby="emailHelp" required/>
-                        <small id="emailHelp" className="form-text text-muted">Digite seu email de login</small>
-                    </div>
-                    <div className="form-group">
-                        <input type="password" value={senha} onChange={ e => setSenha(e.target.value)} className="input-login" placeholder="Senha" required />
-                    </div>
-                    <button type="button" onClick={() => setLogar(true) } className="btn btn-primary bg-roxo btn-ancora">Entrar</button>
-                    <div className="row">
-                        <Link to="/registrar" className="btn-ancora"  >Registrar uma conta</Link>
-                    </div>
-                </form>
-            </div>
+  nav(){    
+    return(
+        <Navbar bg="light" expand="lg" className="nav-color" >
+            <Navbar.Brand href="/home">
+                <img src={logoW} style={{width: 40, marginLeft:25}} alt="Logo img" ></img>QR Card
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav" style={{flexFlow: 'row-reverse'}}>
+            
+            </Navbar.Collapse>
+        </Navbar>  
+    );
+
+  }
+
+  render(){
+    console.log(process.env.NODE_ENV)
+    return(
+        <div className="App-header">
+            {this.barraLateral()}
+            <LoginComponent ></LoginComponent>
+            <img src={logo} className="img-logo" alt="QR Id" ></img>
         </div>
     );
+  }
 }
 
-export default Login;
+export default connect(state => ({isLogged: state.isLogged}))(Login) ;

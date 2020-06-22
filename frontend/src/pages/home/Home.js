@@ -1,16 +1,16 @@
-import React from 'react';
+import React,{Component, createRef} from 'react';
 import HomeCard from './homeCard';
 import {history} from '../../shared/history/history'
 import './home.css';
 import api from '../service';
 import {MdSettings} from 'react-icons/md';
-import Configuracoes from '../configuracoes';
+import Configuracoes from '../../components/configuracoes';
 import { connect } from 'react-redux';
 import {toggleStateUser} from '../../store/actions';
 
-class Home extends React.Component{
+class Home extends Component{
 
-    container = React.createRef();
+    container = createRef();
     _isMounted = false;
     dispatch
     constructor(props){
@@ -30,7 +30,6 @@ class Home extends React.Component{
         document.addEventListener("mousedown", this.handleClickOutside);
 
         if(this._isMounted && this.state.user === null){
-
             
             const token = localStorage.getItem('token');
             const headers = {'Authorization': 'Bearer ' + token}
@@ -57,13 +56,10 @@ class Home extends React.Component{
     }
 
     handleClickOutside = event => {
-        if (
-          this.container.current &&
-          !this.container.current.contains(event.target)
-        ) {
-          this.setState({
-            expanded: false
-          });
+        if (this.container.current && !this.container.current.contains(event.target)) {
+            this.setState({
+                expanded: false
+            });
         }
     };
 

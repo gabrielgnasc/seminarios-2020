@@ -6,21 +6,21 @@ import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import api from '../service';
+import api from '../../pages/service';
 
 
 class Configuracoes extends React.Component{
 
-    montado = false;
+    mounted = false;
     constructor(props){
         super(props);
 
         this.state={
-            nome: '',
+            name: '',
             email: '',
-            senhaA: '',
-            senhaN: '',
-            senhaC: '',
+            oldPasword: '',
+            newPassword: '',
+            comfirmPassword: '',
             expanded: 'painel1',
             fotoPerfil: null,
             user: null,
@@ -30,10 +30,10 @@ class Configuracoes extends React.Component{
     }
 
     componentDidMount() {
-        this.montado = true;
+        this.mounted = true;
     }
     componentWillUnmount() {
-        this.montado = false;
+        this.mounted = false;
     }
 
 
@@ -44,8 +44,8 @@ class Configuracoes extends React.Component{
             'Authorization': 'Bearer ' + token,
         }
         api.get('/token/' + token ,  { headers }).then((res) =>{
-            if(this.montado){
-                this.setState({user: res.data, nome: res.data.name, email: res.data.email})
+            if(this.mounted){
+                this.setState({user: res.data, name: res.data.name, email: res.data.email})
                 if(res.data.file !== null && res.data.file !== undefined){
                     this.setState({fotoPerfil: res.data.file.url});
                 }
@@ -59,15 +59,18 @@ class Configuracoes extends React.Component{
         {
             'Authorization': 'Bearer ' + token,
         }
+
         api.post(url,{user: dados} ,{ headers }).then((res) =>{
             window.location.reload();  
         },(error) => {
+            console.log(error.message)
             alert(error)
-        })
+        });
+        
     }
 
     handleChange = (painel) => (event, isExpanded) => {
-        if(this.montado){
+        if(this.mounted){
             this.setState({expanded: isExpanded ? painel : false});
         }
     };
@@ -93,10 +96,10 @@ class Configuracoes extends React.Component{
     };
 
     handleAlterPassword = () =>{
-        if(this.state.senhaN === this.state.senhaC){
+        if(this.state.newPassword === this.state.comfirmPassword){
             var dados = {
-                senhaAntiga: this.state.senhaA,
-                senhaNova: this.state.senhaN,
+                oldPasword: this.state.oldPasword,
+                newPassword: this.state.newPassword,
                 email: this.state.user.email
             };
             this.updateUser( dados, '/updatePassword');
@@ -109,7 +112,7 @@ class Configuracoes extends React.Component{
 
     handleAlterPerfil = () => {
         var user = this.state.user;
-        user.name = this.state.nome;
+        user.name = this.state.name;
         user.email = this.state.email
         this.updateUser(user, '/updateUser');
 
@@ -137,12 +140,12 @@ class Configuracoes extends React.Component{
                                                 <form className="row" >
 
                                                     <div className="form-group col-md-12">
-                                                        <TextField type="text" className="inputForm" value={this.state?.nome} label="Nome"  
-                                                        onChange={ (e) => this.setState({nome: e.target.value})} />
+                                                        <TextField type="text" className="inputForm" value={this.state?.name} label="name"  
+                                                        onChange={ (e) => this.setState({name: e.target.value})} />
                                                     </div>
 
                                                     <div className="form-group col-md-12">
-                                                        <TextField type="email" className="inputForm" value={this.state?.email} label="Email"  
+                                                        <TextField type="email" disabled className="inputForm" value={this.state?.email} label="Email"  
                                                         onChange={ (e) => this.setState({email: e.target.value})} />
                                                     </div>
 
@@ -165,17 +168,17 @@ class Configuracoes extends React.Component{
 
                                                     <div className="form-group col-md-12">
                                                         <TextField type="password" className="inputForm"  label="Senha antiga"  
-                                                        onChange={ (e) => this.setState({senhaA: e.target.value})} />
+                                                        onChange={ (e) => this.setState({oldPasword: e.target.value})} />
                                                     </div>
 
                                                     <div className="form-group col-md-12">
                                                         <TextField type="password" className="inputForm" label="Nova Senha"  
-                                                        onChange={ (e) => this.setState({senhaN: e.target.value})} />
+                                                        onChange={ (e) => this.setState({newPassword: e.target.value})} />
                                                     </div>
 
                                                     <div className="form-group col-md-12">
                                                         <TextField type="password" className="inputForm" label="Confirmar Senha"  
-                                                        onChange={ (e) => this.setState({senhaC: e.target.value})} />
+                                                        onChange={ (e) => this.setState({comfirmPassword: e.target.value})} />
                                                     </div>
 
                                                     <div className="col-12 justify-items-end">
@@ -221,13 +224,3 @@ class Configuracoes extends React.Component{
     }
 }
 export default Configuracoes
-
-
-// <div className="titulo-card" >
-// <h2>
-//     Configurações
-// </h2>
-// <h5>
-//     Edite suas informações
-// </h5>
-// </div>

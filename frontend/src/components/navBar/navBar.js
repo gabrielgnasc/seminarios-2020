@@ -5,7 +5,7 @@ import { MdHome } from "react-icons/md";
 import {FaUserAlt,FaDog, FaQrcode} from "react-icons/fa";
 import {MdChildFriendly, MdLocalHospital, MdExitToApp} from "react-icons/md";
 import logoW from '../../shared/images/logo-w.png';
-import Configuracoes from '../../pages/configuracoes';
+import Configuracoes from '../configuracoes';
 import { connect } from 'react-redux';
 
 class NavBar extends React.Component {
@@ -42,7 +42,7 @@ class NavBar extends React.Component {
     }
 
     componentDidUpdate(){
-        console.log(this.props)
+        //console.log(this.props)
     }
 
 

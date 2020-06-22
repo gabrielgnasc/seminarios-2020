@@ -1,4 +1,4 @@
-import React  from 'react';
+import React,{Component}  from 'react';
 import './homeCard.css';
 import QRCode from 'qrcode.react';
 import { MdChildFriendly, MdLocalHospital, MdEdit, MdFileDownload } from "react-icons/md";
@@ -14,7 +14,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { connect } from 'react-redux';
 
 
-class HomeCard extends React.Component{
+class HomeCard extends Component{
 
     constructor(props){
         super(props)
@@ -25,7 +25,7 @@ class HomeCard extends React.Component{
     }
 
     updateUser(){
-       
+
         let user = this.state.user;
         
         const token = localStorage.getItem('token');
@@ -48,7 +48,7 @@ class HomeCard extends React.Component{
         let card = []
         for (let i = 0; i < this.state?.user?.type?.length ; i++) {
 
-            var url = "http://localhost:3000/view/" + this.state?.user.type[i].typeId; 
+            var url = process.env.REACT_APP_ENDERECO + "/view/" + this.state?.user.type[i].typeId; 
 
             card.push(
                 <div className="col-md-6" key={this.state?.user.type[i].typeId}> 
@@ -71,12 +71,12 @@ class HomeCard extends React.Component{
                                 </h4>
                             </div>
                             <div className="div-resumo" >
-                                {this.gerarResumo(i)}
+                                {this.generateSummary(i)}
                             </div>
                         </div>
                         
                         <div>
-                            {this.Configuracao(this.state?.user?.type[i]?.typeId, i)}
+                            {this.cardConfiguration(this.state?.user?.type[i]?.typeId, i)}
                         </div>
                     </div>
                 </div>
@@ -86,12 +86,12 @@ class HomeCard extends React.Component{
         if(this.state?.user?.type?.length === 0){
             card = 
                 <div className="col-md-12">
-                     <div className="meu-card" >
+                    <div className="meu-card" >
                         <div className="meu-card-body">
                             <h2>Ooops! Você ainda não possui um QR Id</h2><br/>
                             <h5>Crie quantos quiser !</h5>
                         </div>
-                     </div>
+                    </div>
                 </div>
             ;
         }
@@ -99,7 +99,7 @@ class HomeCard extends React.Component{
         return card
     }
 
-    Configuracao(id, index){
+    cardConfiguration(id, index){
 
         var url1 = this.state?.user.type[index].type.replace("crianças e especiais","criancas-e-especiais");
         var url2 = this.state?.user.type[index].typeId;
@@ -109,9 +109,9 @@ class HomeCard extends React.Component{
                 <button type="button" onClick={ ()=> {history.push('/home/'+url1 + '/' + url2 );} } >
                     <MdEdit></MdEdit>
                 </button>
-               
+
                 <button type="button" onClick={() =>{ this.setState({modal: true})}} ><FaTrash></FaTrash></button>
-               
+
                 <button type="button" onClick={() => this.downloadQR(this.state?.user?.type[index].typeId, this.state?.user?.type[index].nome)}>
                     <MdFileDownload></MdFileDownload>
                 </button>
@@ -155,7 +155,8 @@ class HomeCard extends React.Component{
         );
     }
 
-    gerarResumo(i){
+    
+    generateSummary(i){
         const dados = this.state?.user.type[i];
         var labels = [];
 

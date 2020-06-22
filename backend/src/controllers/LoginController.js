@@ -7,6 +7,7 @@ const authConfig = require('./../config/auth');
 module.exports = {
 
     async index(req, res){
+        console.log(res)
         if (req.body.email && req.body.password ) {
  
             var userData = {
