@@ -14,7 +14,7 @@
     "bootstrap": "^4.4.1",
     "dotenv": "^8.2.0",
     "history": "^4.10.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "materialize-css": "^1.0.0-rc.2",
     "popper.js": "^1.16.1",
     "qrcode.react": "^1.0.0",
