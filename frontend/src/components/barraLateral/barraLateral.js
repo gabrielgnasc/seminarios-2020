@@ -17,7 +17,7 @@ class BarraLateral extends Component{
             </div>
             <div style={{justifySelf: 'center', alignSelf: 'center'}}>
               <img alt="QR-ID" src={qrid} className="img-qr" ></img>
-              <p style={{color:'#FFF', fontSize:16}}>Escaneie para mais <Link to="/info">informações</Link></p>
+              <p style={{color:'#FFF', fontSize:16}}>Escaneie ou clique para mais <Link to="/info">informações</Link></p>
             </div>
             <div className="text-info-w2">
               <p >Cadastre-se já, é gratuito.</p><br></br>

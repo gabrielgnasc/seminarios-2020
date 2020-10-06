@@ -95,7 +95,7 @@ class Configuracoes extends React.Component{
         
     };
 
-    handleAlterPassword = () =>{
+    handleChangePassword = () =>{
         if(this.state.newPassword === this.state.comfirmPassword){
             var dados = {
                 oldPasword: this.state.oldPasword,
@@ -110,7 +110,7 @@ class Configuracoes extends React.Component{
         }
     }
 
-    handleAlterPerfil = () => {
+    handleChangePerfil = () => {
         var user = this.state.user;
         user.name = this.state.name;
         user.email = this.state.email
@@ -150,7 +150,7 @@ class Configuracoes extends React.Component{
                                                     </div>
 
                                                     <div className="col-12 justify-items-end">
-                                                        <button type="button" onClick={ this.handleAlterPerfil }
+                                                        <button type="button" onClick={ this.handleChangePerfil }
                                                             className="btn btn-primary bg-roxo btn-salvar offset-md-10">Salvar</button>
                                                     </div>
 
@@ -182,7 +182,7 @@ class Configuracoes extends React.Component{
                                                     </div>
 
                                                     <div className="col-12 justify-items-end">
-                                                        <button type="button" onClick={ this.handleAlterPassword}
+                                                        <button type="button" onClick={ this.handleChangePassword}
                                                         className="btn btn-primary bg-roxo btn-salvar offset-md-10">Salvar</button>
                                                     </div>
                                                 </form>

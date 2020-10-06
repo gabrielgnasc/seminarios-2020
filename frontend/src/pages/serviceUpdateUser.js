@@ -24,7 +24,7 @@ async function serviceUpdateUser(e, userI, idI, stateI){
             user.type[index] = stateI;
 
         }else{
-            stateI.typeId = btoa(userI.email) + uuid();
+            stateI.typeId = btoa(userI.email) + '--sep--'+uuid();
             user.type.push(stateI)
         }
 

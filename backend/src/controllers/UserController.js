@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Auth = require('../middlewares/auth');
+const { Console } = require('console');
 global.Buffer = global.Buffer || require('buffer').Buffer;
 
 
@@ -27,7 +28,7 @@ module.exports = {
         const {params} = req;
         const parametros = params.param;
 
-        const list = parametros.split("=");
+        const list = parametros.split("--sep--");
         const email = Buffer.from(list[0], 'base64').toString();
 
         const user = await User.findOne({email});
